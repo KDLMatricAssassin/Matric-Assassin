@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Assassin Network</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-container">
+        <div class="login-logo">
+            <i class="fas fa-user-secret"></i>
+        </div>
+        <h1 class="login-title">Senior Assassin</h1>
+        <div class="form-group">
+            <input type="text" id="player-code" class="form-control" placeholder="Enter your code">
+        </div>
+        <button id="login-btn" class="btn btn-block">Enter Game</button>
+        <div style="margin-top: 15px;">
+            <button id="admin-login-btn" class="btn btn-admin">Admin Login</button>
+        </div>
+    </div>
+
+    <!-- Targets View (initially hidden) -->
+    <div id="targets-view" class="targets-view" style="display: none;">
+        <div class="targets-container">
+            <div class="targets-header">
+                <h1>My Targets</h1>
+                <button id="back-to-app-from-targets" class="btn btn-back">
+                    <i class="fas fa-arrow-left"></i> Back to App
+                </button>
+            </div>
+            
+            <div class="targets-content">
+                <div class="current-target-section">
+                    <h2><i class="fas fa-bullseye"></i> Current Target</h2>
+                    <div id="current-target" class="target-card">
+                        <div class="target-loading">
+                            <i class="fas fa-spinner fa-spin"></i> Loading target...
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="previous-targets-section">
+                    <h2><i class="fas fa-history"></i> Previous Targets</h2>
+                    <div id="previous-targets" class="targets-list">
+                        <div class="no-targets">
+                            <i class="fas fa-inbox"></i>
+                            <p>No previous targets yet</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard View (initially hidden) -->
+    <div id="leaderboard-view" class="leaderboard-view" style="display: none;">
+        <div class="leaderboard-container">
+            <div class="leaderboard-header">
+                <h1>Leaderboard</h1>
+                <button id="back-to-app" class="btn btn-back">
+                    <i class="fas fa-arrow-left"></i> Back to App
+                </button>
+            </div>
+            <div class="leaderboard-grid">
+                <div class="leaderboard-header-row">
+                    <div class="rank-col sortable" data-sort="rank">Rank <i class="fas fa-sort"></i></div>
+                    <div class="player-col sortable" data-sort="name">Player <i class="fas fa-sort"></i></div>
+                    <div class="kills-col sortable" data-sort="kills">Kills <i class="fas fa-sort"></i></div>
+                    <div class="status-col sortable" data-sort="status">Status <i class="fas fa-sort"></i></div>
+                </div>
+                <div id="leaderboard-entries" class="leaderboard-entries">
+                    <!-- Leaderboard entries will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App (initially hidden) -->
+    <div id="app" style="display: none;">
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-user-secret"></i>
+                        <span>Assassin Network</span>
+                    </div>
+                    <div>
+                        <button id="admin-panel-toggle" class="btn btn-admin">
+                            <i class="fas fa-shield-alt"></i> Admin
+                        </button>
+                        <button id="logout-btn" class="btn btn-logout">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="container">
+            <div class="main-layout">
+                <!-- Left Sidebar -->
+                <aside class="sidebar">
+                    <div class="profile-card">
+                        <div class="profile-img-container">
+                            <div id="profile-avatar" class="profile-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <label class="profile-upload-btn" for="profile-picture-upload">
+                                <i class="fas fa-camera"></i>
+                            </label>
+                            <input type="file" id="profile-picture-upload" accept="image/*" style="display: none;">
+                        </div>
+                        <h3 id="player-name">John Doe</h3>
+                        <div id="player-status" class="status-badge status-active">Active</div>
+                        
+                        <div class="target-info">
+                            <div class="target-label">Your Target</div>
+                            <div id="target-name" class="target-name">Loading...</div>
+                        </div>
+                    </div>
+
+                    <nav class="nav-menu">
+                        <a href="#" class="nav-link active">
+                            <i class="fas fa-home"></i> Feed
+                        </a>
+                        <a href="#" id="leaderboard-btn" class="nav-link">
+                            <i class="fas fa-trophy"></i> Leaderboard
+                        </a>
+                        <a href="#" id="targets-btn" class="nav-link">
+                            <i class="fas fa-bullseye"></i> My Targets
+                        </a>
+                        <a href="#" id="rules-btn" class="nav-link">
+                            <i class="fas fa-book"></i> Rules
+                        </a>
+                    </nav>
+                </aside>
+
+                <!-- Main Feed -->
+                <main class="feed">
+                    <!-- Post Form -->
+                    <div class="card post-form">
+                        <div class="post-form-header">
+                            <div class="profile-avatar-container" id="current-user-avatar">
+                                <i class="fas fa-user"></i>
+                                <input type="file" id="profile-pic-upload" accept="image/*" class="profile-pic-upload">
+                            </div>
+                            <input type="text" id="post-content" class="post-input" placeholder="What's happening in the game?">
+                        </div>
+                        <div class="post-form-actions">
+                            <div>
+                                <label for="post-image-upload" class="action-btn">
+                                    <i class="fas fa-image"></i> Photo
+                                    <input type="file" id="post-image-upload" accept="image/*" style="display: none;">
+                                </label>
+                                <label for="post-video-upload" class="action-btn">
+                                    <i class="fas fa-video"></i> Video
+                                    <input type="file" id="post-video-upload" accept="video/*" style="display: none;">
+                                </label>
+                            </div>
+                            <button id="submit-post" class="btn btn-post">Post</button>
+                        </div>
+                        <div id="post-preview" class="post-preview" style="display: none; margin-top: 15px;">
+                            <img id="post-image-preview" src="#" alt="Preview" style="max-width: 100%; border-radius: 8px; display: none;">
+                            <video id="post-video-preview" controls style="max-width: 100%; border-radius: 8px; display: none; margin-top: 10px;"></video>
+                        </div>
+                        <div id="post-status" class="post-status" style="display: none; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px; text-align: center;">
+                            Your post has been submitted!
+                        </div>
+                    </div>
+
+                    <!-- Pinned Post -->
+                    <div class="card post pinned-post">
+                        <div class="post-header">
+                            <div class="post-user-info">
+                                <h4><i class="fas fa-thumbtack" style="color: #ff6b6b; margin-right: 8px;"></i> Game Boundaries</h4>
+                                <span class="post-time">Pinned by Admin</span>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p>Out of bounds areas for Matric Assassin 2025. Click the image to view full size.</p>
+                            <div class="post-image">
+                                <img src="WhatsApp Image 2025-06-10 at 18.14.08_e3453693.jpg" alt="Game Boundaries Map" class="enlargeable" style="width: 100%; border-radius: 8px; margin-top: 10px; cursor: pointer;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Posts will be dynamically inserted here -->
+                    <div id="posts-container">
+                    </div>
+                </main>
+
+                <!-- Right Sidebar -->
+                <aside class="right-sidebar">
+                    <div class="card">
+                        <h3>Game Stats</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="active-players">24</div>
+                                <div class="stat-label">Active</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="eliminated-players">12</div>
+                                <div class="stat-label">Eliminated</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="days-left">7</div>
+                                <div class="stat-label">Days Left</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3>Top Assassins</h3>
+                        <div id="leaderboard">
+                            <!-- Leaderboard items will be dynamically inserted here when eliminations occur -->
+                            <div class="empty-leaderboard">
+                                <i class="fas fa-trophy"></i>
+                                <p>No eliminations yet</p>
+                                <small>Check back after the first eliminations are recorded</small>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel (initially hidden) -->
+    <div id="admin-panel" class="admin-panel">
+        <div class="admin-header">
+            <h2>Admin Panel</h2>
+            <div class="admin-controls">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="admin-search" placeholder="Search players...">
+                </div>
+                <button id="close-admin-panel" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-players">0</div>
+                    <div class="stat-label">Total Players</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="active-players-count">0</div>
+                    <div class="stat-label">Active</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="eliminated-players-count">0</div>
+                    <div class="stat-label">Eliminated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="total-kills">0</div>
+                    <div class="stat-label">Total Eliminations</div>
+                </div>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="players-tab">Players</button>
+                <button class="tab-btn" data-tab="posts-tab">Post Approvals</button>
+                <button class="tab-btn" data-tab="stats-tab">Game Stats</button>
+            </div>
+
+            <div class="tab-content active" id="players-tab">
+                <div class="players-table-container">
+                    <div class="table-header">
+                        <div class="header-col name-col">Player</div>
+                        <div class="header-col status-col">Status</div>
+                        <div class="header-col kills-col">Eliminations</div>
+                        <div class="header-col target-col">Target</div>
+                        <div class="header-col actions-col">Actions</div>
+                    </div>
+                    <div class="search-container">
+                        <input type="text" id="admin-search" placeholder="Search players..." class="search-input">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                    <div class="players-list" id="players-list">
+                        <!-- Players will be listed here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Posts Approval Tab -->
+            <div class="tab-content" id="posts-tab">
+                <div class="posts-approval-container">
+                    <div class="pending-section">
+                        <h3>Pending Post Approvals</h3>
+                        <div class="pending-posts-list" id="pending-posts-list">
+                            <div class="empty-state">
+                                <i class="fas fa-check-circle"></i>
+                                <p>No pending posts to approve</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="approved-section">
+                        <h3>Recently Approved Posts</h3>
+                        <div class="approved-posts-list" id="approved-posts-list">
+                            <div class="empty-state">
+                                <i class="fas fa-check-circle"></i>
+                                <p>No recently approved posts</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="tab-btn active" data-tab="players-tab">Players</button>
+            <button class="tab-btn" data-tab="posts-tab">Post Approvals</button>
+            <button class="tab-btn" data-tab="stats-tab">Game Stats</button>
+        </div>
+    </div>
+
+    <!-- Rules Modal -->
+    <div id="rules-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Matric Assassin Rules</h3>
+                <span class="close-modal" id="close-rules-modal">&times;</span>
+            </div>
+            <div class="modal-body" style="max-height: 90vh; overflow-y: auto; padding: 20px; text-align: center;">
+                <p style="text-align: left; margin-bottom: 20px; line-height: 1.6;">
+                    Matric Assassin will begin on the 12th June 2025. Out of school is off limits as well as the specific areas marked on the map sent out. Your elimination is only valid if following the correct rules provided. Make sure to keep a look out for any changes that may take place during the course of the game.
+                </p>
+                <div class="rules-images">
+                    <img src="WhatsApp Image 2025-06-10 at 18.14.08_94ce2a09.jpg" alt="Rules Part 1" style="max-width: 100%; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <div class="pinned-image-container">
+                        <img src="WhatsApp Image 2025-06-10 at 18.14.08_e3453693.jpg" alt="Rules Part 2" class="enlargeable" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); cursor: pointer;">
+                        <div class="pinned-badge">
+                            <i class="fas fa-thumbtack"></i> Pinned
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Enlarged Image Modal -->
+    <div id="image-modal" class="modal" style="background-color: rgba(0,0,0,0.9); display: none;">
+        <span class="close-modal" id="close-image-modal" style="color: white; font-size: 40px; position: absolute; top: 15px; right: 35px; cursor: pointer;">&times;</span>
+        <img class="modal-content" id="enlarged-img" style="margin: auto; display: block; max-width: 90%; max-height: 90%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    </div>
+
+    <!-- Player Details Modal -->
+    <div id="player-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Player Details</h3>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="player-header">
+                    <div class="player-avatar" id="detail-player-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="player-title">
+                        <h3 id="detail-player-name">Player Name</h3>
+                        <div class="status-badge" id="detail-player-status">
+                            <span class="status-dot"></span>
+                            <span>Active</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="player-stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="detail-player-kills">0</div>
+                        <div class="stat-label">Eliminations</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="detail-player-targets">0</div>
+                        <div class="stat-label">Targets</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="detail-player-eliminated">-</div>
+                        <div class="stat-label">Eliminated</div>
+                    </div>
+                </div>
+
+                <div class="info-section">
+                    <h4>Target Information</h4>
+                    <div class="info-row">
+                        <span class="info-label">Current Target:</span>
+                        <span class="info-value" id="detail-current-target">None</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Hunted By:</span>
+                        <span class="info-value" id="detail-hunted-by">None</span>
+                    </div>
+                </div>
+
+                <div class="action-buttons" id="player-actions">
+                    <!-- Buttons will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Suspend Player Modal -->
+    <div id="suspend-player-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Suspend Player</h3>
+                <button class="close-modal" onclick="document.getElementById('suspend-player-modal').classList.remove('active')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="suspend-player-id">
+                <p>Select suspension duration:</p>
+                <div class="suspension-options">
+                    <button class="btn btn-warning suspend-option" data-days="1">
+                        <i class="fas fa-clock"></i> 1 Day
+                    </button>
+                    <button class="btn btn-warning suspend-option" data-days="2">
+                        <i class="fas fa-calendar-day"></i> 2 Days
+                    </button>
+                    <button class="btn btn-warning suspend-option" data-days="7">
+                        <i class="fas fa-calendar-week"></i> 1 Week
+                    </button>
+                    <button class="btn btn-warning suspend-option" data-days="30">
+                        <i class="fas fa-calendar-alt"></i> 1 Month
+                    </button>
+                    <button class="btn btn-danger suspend-option" data-days="365">
+                        <i class="fas fa-ban"></i> 1 Year
+                    </button>
+                    <button class="btn btn-secondary suspend-option" data-days="custom">
+                        <i class="fas fa-calendar-plus"></i> Custom
+                    </button>
+                </div>
+                <div id="custom-suspend-container" style="display: none; margin-top: 15px;">
+                    <label for="custom-days">Number of days:</label>
+                    <input type="number" id="custom-days" class="form-control" min="1" style="margin-top: 5px;">
+                    <button class="btn btn-primary" id="apply-custom-suspend" style="margin-top: 10px;">
+                        Apply Custom Duration
+                    </button>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" onclick="document.getElementById('suspend-player-modal').classList.remove('active')">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Player Modal -->
+    <div id="edit-player-modal" class="modal-overlay">
+        <div class="modal">
+            <div class="admin-tabs">
+                <button class="tab-btn active" data-tab="players-tab">Players</button>
+                <button class="tab-btn" data-tab="posts-tab">Post Approvals</button>
+                <button class="tab-btn" data-tab="stats-tab">Game Stats</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="edit-player-id">
+                <div class="form-group">
+                    <label for="edit-name">Name</label>
+                    <input type="text" id="edit-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-email">Email</label>
+                    <input type="email" id="edit-email" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="edit-status">Status</label>
+                    <select id="edit-status" class="form-control">
+                        <option value="active">Active</option>
+                        <option value="eliminated">Eliminated</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" onclick="document.getElementById('edit-player-modal').classList.remove('active')">
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary" onclick="savePlayerEdits()">
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
