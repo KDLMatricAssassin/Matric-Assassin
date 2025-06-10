@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Assassin - Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input {
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .player {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .player:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Senior Assassin - Test Interface</h1>
+        
+        <div class="card">
+            <h2>Player Login</h2>
+            <div>
+                <input type="text" id="playerCode" placeholder="Enter your unique code">
+                <button onclick="login()">Login</button>
+            </div>
+        </div>
+
+        <div class="card" id="playerInfo" style="display: none;">
+            <h2>Your Target</h2>
+            <div id="targetInfo">
+                <p>Loading your target information...</p>
+            </div>
+            <div>
+                <h3>Report Elimination</h3>
+                <input type="file" id="eliminationProof" accept="image/*,video/*">
+                <button onclick="reportElimination()">Submit Proof</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Admin Panel (For Testing)</h2>
+            <div>
+                <button onclick="viewAllPlayers()">View All Players</button>
+                <button onclick="resetGame()" style="background-color: #f44336;">Reset Game</button>
+            </div>
+            <div id="allPlayers"></div>
+        </div>
+    </div>
+
+    <script>
+        // Mock data for testing
+        const mockPlayers = [
+            { id: 1, name: "John Doe", code: "ABC123", target: "Jane Smith", status: "active" },
+            { id: 2, name: "Jane Smith", code: "DEF456", target: "Bob Johnson", status: "active" },
+            { id: 3, name: "Bob Johnson", code: "GHI789", target: "John Doe", status: "active" }
+        ];
+
+        function login() {
+            const code = document.getElementById('playerCode').value.trim();
+            const player = mockPlayers.find(p => p.code === code);
+            
+            if (player) {
+                document.getElementById('playerInfo').style.display = 'block';
+                document.getElementById('targetInfo').innerHTML = `
+                    <p><strong>Name:</strong> ${player.target}</p>
+                    <p><strong>Your Status:</strong> <span style="color: green;">${player.status}</span></p>
+                `;
+            } else {
+                alert('Invalid code. Please try again.');
+            }
+        }
+
+        function reportElimination() {
+            const fileInput = document.getElementById('eliminationProof');
+            if (fileInput.files.length === 0) {
+                alert('Please select a file as proof');
+                return;
+            }
+            alert('Elimination reported! Waiting for admin approval.');
+        }
+
+        function viewAllPlayers() {
+            const container = document.getElementById('allPlayers');
+            container.innerHTML = '<h3>All Players</h3>';
+            
+            mockPlayers.forEach(player => {
+                const playerDiv = document.createElement('div');
+                playerDiv.className = 'player';
+                playerDiv.innerHTML = `
+                    <div>
+                        <strong>${player.name}</strong> (${player.code})
+                        <br>
+                        <small>Target: ${player.target} | Status: ${player.status}</small>
+                    </div>
+                    <button onclick="eliminatePlayer(${player.id})" ${player.status !== 'active' ? 'disabled' : ''}>
+                        Mark Eliminated
+                    </button>
+                `;
+                container.appendChild(playerDiv);
+            });
+        }
+
+        function eliminatePlayer(playerId) {
+            if (confirm('Are you sure you want to mark this player as eliminated?')) {
+                const player = mockPlayers.find(p => p.id === playerId);
+                if (player) {
+                    player.status = 'eliminated';
+                    viewAllPlayers();
+                    alert(`${player.name} has been marked as eliminated!`);
+                }
+            }
+        }
+
+        function resetGame() {
+            if (confirm('Are you sure you want to reset the game? This will reactivate all players.')) {
+                mockPlayers.forEach(player => {
+                    player.status = 'active';
+                });
+                viewAllPlayers();
+                alert('Game has been reset!');
+            }
+        }
+
+        // Initialize
+        viewAllPlayers();
+    </script>
+</body>
+</html>
