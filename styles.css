@@ -94,6 +94,66 @@ body {
     transform: translateY(-2px);
 }
 
+/* Admin Panel Styles */
+.admin-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    height: 100%;
+    background: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+}
+
+.admin-panel.active {
+    right: 0;
+}
+
+.admin-header {
+    padding: 20px;
+    background: var(--secondary);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.admin-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    padding: 0 20px;
+}
+
+.admin-tab {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.admin-tab.active {
+    border-bottom-color: var(--primary);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.admin-tab-content {
+    padding: 20px;
+    display: none;
+}
+
+.admin-tab-content.active {
+    display: block;
+}
+
 /* Red back button for targets view */
 #back-to-app-from-targets {
     background-color: #e74c3c;
