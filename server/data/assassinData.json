@@ -1,0 +1,646 @@
+{
+  "lastUpdated": "2025-06-11T22:44:08+02:00",
+  "playerCount": 125,
+  "assignments": [
+    {
+      "hunter": "Leora Joffe",
+      "target": "Amy Moritz",
+      "code": "4J2Y2H"
+    },
+    {
+      "hunter": "Amy Moritz",
+      "target": "Lia Levy",
+      "code": "0L5FUM"
+    },
+    {
+      "hunter": "Lia Levy",
+      "target": "Sasha Rubenstein",
+      "code": "178ZY0"
+    },
+    {
+      "hunter": "Sasha Rubenstein",
+      "target": "Sam Joffe",
+      "code": "PQK6E2"
+    },
+    {
+      "hunter": "Sam Joffe",
+      "target": "Leor Friedman",
+      "code": "2Y53TN"
+    },
+    {
+      "hunter": "Leor Friedman",
+      "target": "Leora Boner",
+      "code": "LD3BIX"
+    },
+    {
+      "hunter": "Leora Boner",
+      "target": "Tali Smith",
+      "code": "H1X9M2"
+    },
+    {
+      "hunter": "Josh Bayhack",
+      "target": "Chad Goldberg",
+      "code": "VQAF9T"
+    },
+    {
+      "hunter": "Chad Goldberg",
+      "target": "Tyron Lasovsky",
+      "code": "MMRF4N"
+    },
+    {
+      "hunter": "Tyron Lasovsky",
+      "target": "Josh Bayhack",
+      "code": "DD2ZOV"
+    },
+    {
+      "hunter": "Tali Smith",
+      "target": "Alex Hirshowitz",
+      "code": "4G31PT"
+    },
+    {
+      "hunter": "Alex Hirshowitz",
+      "target": "Ella Barnett",
+      "code": "JXR0HD"
+    },
+    {
+      "hunter": "Ella Barnett",
+      "target": "Harvey Joshua",
+      "code": "Z5DKJ5"
+    },
+    {
+      "hunter": "Harvey Joshua",
+      "target": "Jamie Kissos",
+      "code": "NKJA87"
+    },
+    {
+      "hunter": "Jamie Kissos",
+      "target": "Seth Sklar",
+      "code": "SGRKSN"
+    },
+    {
+      "hunter": "Levi Raff",
+      "target": "Gideon Bloom",
+      "code": "AVZQTV"
+    },
+    {
+      "hunter": "Gideon Bloom",
+      "target": "Joshua Galgut",
+      "code": "QTUVNO"
+    },
+    {
+      "hunter": "Joshua Galgut",
+      "target": "Adam Lyons",
+      "code": "Q6HRW9"
+    },
+    {
+      "hunter": "Adam Lyons",
+      "target": "Tali Sack",
+      "code": "TFHSZ1"
+    },
+    {
+      "hunter": "Tali Sack",
+      "target": "Dinah Worms",
+      "code": "LENR3V"
+    },
+    {
+      "hunter": "Dinah Worms",
+      "target": "Eitan Greenblatt",
+      "code": "ZT6I0K"
+    },
+    {
+      "hunter": "Eitan Greenblatt",
+      "target": "Jaime Diamond",
+      "code": "89GEU2"
+    },
+    {
+      "hunter": "Jaime Diamond",
+      "target": "Sara Joffe",
+      "code": "O2SWTR"
+    },
+    {
+      "hunter": "Sara Joffe",
+      "target": "Tayla Cohen",
+      "code": "N20XJZ"
+    },
+    {
+      "hunter": "Tayla Cohen",
+      "target": "Aviva Samuels",
+      "code": "JRB3V5"
+    },
+    {
+      "hunter": "Aviva Samuels",
+      "target": "Cody Hirschman",
+      "code": "K5PVFA"
+    },
+    {
+      "hunter": "Cody Hirschman",
+      "target": "Raz Oudmayer",
+      "code": "133GCW"
+    },
+    {
+      "hunter": "Raz Oudmayer",
+      "target": "Mischa Suchard",
+      "code": "R5T8SU"
+    },
+    {
+      "hunter": "Mischa Suchard",
+      "target": "Amelie Hirshowitz",
+      "code": "SX10HP"
+    },
+    {
+      "hunter": "Amelie Hirshowitz",
+      "target": "Eliana Mervis",
+      "code": "GLUY05"
+    },
+    {
+      "hunter": "Eliana Mervis",
+      "target": "Daniel Waisman",
+      "code": "FN8I2L"
+    },
+    {
+      "hunter": "Daniel Waisman",
+      "target": "Adam Gratch",
+      "code": "KIIAMI"
+    },
+    {
+      "hunter": "Adam Gratch",
+      "target": "Hannah Camberg",
+      "code": "9910Y6"
+    },
+    {
+      "hunter": "Hannah Camberg",
+      "target": "Ella Gingell",
+      "code": "8CVIR8"
+    },
+    {
+      "hunter": "Ella Gingell",
+      "target": "Jamie Jackson",
+      "code": "XU6OG6"
+    },
+    {
+      "hunter": "Jamie Jackson",
+      "target": "Lily-Rose Brenner",
+      "code": "47W0WX"
+    },
+    {
+      "hunter": "Lily-Rose Brenner",
+      "target": "Emily Joffe",
+      "code": "06BJMJ"
+    },
+    {
+      "hunter": "Emily Joffe",
+      "target": "Rebbeca Jellin",
+      "code": "9QGFL4"
+    },
+    {
+      "hunter": "Rebbeca Jellin",
+      "target": "Mika Sacharowitz",
+      "code": "6MZSHY"
+    },
+    {
+      "hunter": "Mika Sacharowitz",
+      "target": "Sabrina Cohen",
+      "code": "0DE5TC"
+    },
+    {
+      "hunter": "Adam Goldberg",
+      "target": "Leora Joffe",
+      "code": "3A5GQU"
+    },
+    {
+      "hunter": "Sabrina Cohen",
+      "target": "Jayce Katz",
+      "code": "SCISHH"
+    },
+    {
+      "hunter": "Jayce Katz",
+      "target": "Tyla Rothstein",
+      "code": "XW1OM0"
+    },
+    {
+      "hunter": "Tyla Rothstein",
+      "target": "Doron Sandler",
+      "code": "0JPU31"
+    },
+    {
+      "hunter": "Doron Sandler",
+      "target": "Gabriel Boyer",
+      "code": "12BFEX"
+    },
+    {
+      "hunter": "Ben Levin",
+      "target": "Jadon Banfield",
+      "code": "XTMN4A"
+    },
+    {
+      "hunter": "Jadon Banfield",
+      "target": "Eden Lyons",
+      "code": "S31WNM"
+    },
+    {
+      "hunter": "Eden Lyons",
+      "target": "Jacob Maloon",
+      "code": "G93OWT"
+    },
+    {
+      "hunter": "Jacob Maloon",
+      "target": "Aidan Cohen",
+      "code": "P2C2MO"
+    },
+    {
+      "hunter": "Aidan Cohen",
+      "target": "Sam Gewer",
+      "code": "53EA5P"
+    },
+    {
+      "hunter": "Sam Gewer",
+      "target": "Levi Raff",
+      "code": "XLETPI"
+    },
+    {
+      "hunter": "Seth Sklar",
+      "target": "Sage Klug",
+      "code": "VE8T33"
+    },
+    {
+      "hunter": "Sage Klug",
+      "target": "Lindy Kolman",
+      "code": "WPD7IS"
+    },
+    {
+      "hunter": "Lindy Kolman",
+      "target": "Zach Karan",
+      "code": "EOXN5Q"
+    },
+    {
+      "hunter": "Zach Karan",
+      "target": "Jayden Sacker",
+      "code": "981HWC"
+    },
+    {
+      "hunter": "Jayden Sacker",
+      "target": "Dakota Trakman",
+      "code": "W92ATY"
+    },
+    {
+      "hunter": "Dakota Trakman",
+      "target": "Madison Williams",
+      "code": "QXCI4Y"
+    },
+    {
+      "hunter": "Madison Williams",
+      "target": "Savanna Shortridge",
+      "code": "8SHI3Z"
+    },
+    {
+      "hunter": "Savanna Shortridge",
+      "target": "Ella Lewis",
+      "code": "U1HW8O"
+    },
+    {
+      "hunter": "Ella Lewis",
+      "target": "Alexa Reubenson",
+      "code": "QM9Z8A"
+    },
+    {
+      "hunter": "Alexa Reubenson",
+      "target": "Gabi Baily",
+      "code": "Q1359M"
+    },
+    {
+      "hunter": "Gabi Baily",
+      "target": "Mia Jacobson",
+      "code": "7RG1UX"
+    },
+    {
+      "hunter": "Demi Wulfsohn",
+      "target": "Ben Levin",
+      "code": "HHC4I2"
+    },
+    {
+      "hunter": "Gabriel Boyer",
+      "target": "Jessica Sack",
+      "code": "744X3N"
+    },
+    {
+      "hunter": "Jessica Sack",
+      "target": "Gabi Romberg",
+      "code": "YB7LAD"
+    },
+    {
+      "hunter": "Gabi Romberg",
+      "target": "Yael Yanai",
+      "code": "50HC4Z"
+    },
+    {
+      "hunter": "Yael Yanai",
+      "target": "Yotam Limor",
+      "code": "UCJMV6"
+    },
+    {
+      "hunter": "Yotam Limor",
+      "target": "SJ Makgalemele",
+      "code": "JDHLLE"
+    },
+    {
+      "hunter": "SJ Makgalemele",
+      "target": "Sam Kallner",
+      "code": "G2UR1O"
+    },
+    {
+      "hunter": "Sam Kallner",
+      "target": "Sarah Kahanowitz",
+      "code": "PLJF5O"
+    },
+    {
+      "hunter": "Sarah Kahanowitz",
+      "target": "Noa Herring",
+      "code": "4OERAC"
+    },
+    {
+      "hunter": "Noa Herring",
+      "target": "Adam Schlosberg",
+      "code": "88TVCC"
+    },
+    {
+      "hunter": "Adam Schlosberg",
+      "target": "Jamie Defries",
+      "code": "9V65YO"
+    },
+    {
+      "hunter": "Jamie Defries",
+      "target": "Lexi Silverman",
+      "code": "WJ8GNH"
+    },
+    {
+      "hunter": "Lexi Silverman",
+      "target": "Cameron Lyons",
+      "code": "3WL5HW"
+    },
+    {
+      "hunter": "Cameron Lyons",
+      "target": "Alissa Kirkle",
+      "code": "380QA2"
+    },
+    {
+      "hunter": "Alissa Kirkle",
+      "target": "Dunn Klaff",
+      "code": "HM0FJL"
+    },
+    {
+      "hunter": "Dunn Klaff",
+      "target": "Sasha Gordon",
+      "code": "0QWEB2"
+    },
+    {
+      "hunter": "Sasha Gordon",
+      "target": "Leah Joss",
+      "code": "22TY97"
+    },
+    {
+      "hunter": "Leah Joss",
+      "target": "Gila Smith",
+      "code": "QLQL31"
+    },
+    {
+      "hunter": "Gila Smith",
+      "target": "Kiara Cohen",
+      "code": "MDFAB2"
+    },
+    {
+      "hunter": "Kiara Cohen",
+      "target": "Ethan Lunt",
+      "code": "AF0HJW"
+    },
+    {
+      "hunter": "Ethan Lunt",
+      "target": "Cammi Dorfman",
+      "code": "6PFFSA"
+    },
+    {
+      "hunter": "Cammi Dorfman",
+      "target": "Tayla Smith",
+      "code": "9ZPS3C"
+    },
+    {
+      "hunter": "Jordan Ribeiro",
+      "target": "Jesse Silber",
+      "code": "15AJ28"
+    },
+    {
+      "hunter": "Jesse Silber",
+      "target": "Mika Fanaroff",
+      "code": "JRKL3S"
+    },
+    {
+      "hunter": "Mika Fanaroff",
+      "target": "Demi Lurie",
+      "code": "YUYCGX"
+    },
+    {
+      "hunter": "Demi Lurie",
+      "target": "Eli Kagan",
+      "code": "WY7YKG"
+    },
+    {
+      "hunter": "Eli Kagan",
+      "target": "Jordan Ribeiro",
+      "code": "XLDFHS"
+    },
+    {
+      "hunter": "Jayden Sacker",
+      "target": "Jessica Woznica",
+      "code": "LZLI9V"
+    },
+    {
+      "hunter": "Jessica Woznica",
+      "target": "Rory Pai",
+      "code": "2NKJ86"
+    },
+    {
+      "hunter": "Rory Pai",
+      "target": "Brad Shill",
+      "code": "QL946W"
+    },
+    {
+      "hunter": "Brad Shill",
+      "target": "Erin Dworkin",
+      "code": "MH6UHT"
+    },
+    {
+      "hunter": "Erin Dworkin",
+      "target": "Hannah Duchan",
+      "code": "2TCGEU"
+    },
+    {
+      "hunter": "Hannah Duchan",
+      "target": "Hannah Gordon",
+      "code": "59PT7H"
+    },
+    {
+      "hunter": "Hannah Gordon",
+      "target": "Benji Furman",
+      "code": "20RXOQ"
+    },
+    {
+      "hunter": "Benji Furman",
+      "target": "Gabi Camberg",
+      "code": "4MO2UJ"
+    },
+    {
+      "hunter": "Gabi Camberg",
+      "target": "Teagan Goldsmith",
+      "code": "AFWWMH"
+    },
+    {
+      "hunter": "Teagan Goldsmith",
+      "target": "Demi Toker",
+      "code": "HHVU6V"
+    },
+    {
+      "hunter": "Demi Toker",
+      "target": "Tyra Kuper",
+      "code": "7PFRLH"
+    },
+    {
+      "hunter": "Tyra Kuper",
+      "target": "Demi Wulfsohn",
+      "code": "2ZQ2Q8"
+    },
+    {
+      "hunter": "Mia Jacobson",
+      "target": "Lexi Fine",
+      "code": "9TAPCH"
+    },
+    {
+      "hunter": "Lexi Fine",
+      "target": "Ella Solomon",
+      "code": "7W6AIY"
+    },
+    {
+      "hunter": "Ella Solomon",
+      "target": "Gaby Shankman",
+      "code": "952SOV"
+    },
+    {
+      "hunter": "Gaby Shankman",
+      "target": "Sierra Sher",
+      "code": "7615DY"
+    },
+    {
+      "hunter": "Sierra Sher",
+      "target": "Jami Levin",
+      "code": "SATV9T"
+    },
+    {
+      "hunter": "Jami Levin",
+      "target": "Sarah Alexander",
+      "code": "I6G657"
+    },
+    {
+      "hunter": "Sarah Alexander",
+      "target": "Jordana Sundelson",
+      "code": "P9J0W4"
+    },
+    {
+      "hunter": "Jordana Sundelson",
+      "target": "Bailey Lipworth",
+      "code": "FG85RS"
+    },
+    {
+      "hunter": "Bailey Lipworth",
+      "target": "Leah Kerr-Phillips",
+      "code": "W92ATY"
+    },
+    {
+      "hunter": "Leah Kerr-Phillips",
+      "target": "Dakota Trakman",
+      "code": "2HE5XC"
+    },
+    {
+      "hunter": "Tayla Smith",
+      "target": "Amber Freidlein",
+      "code": "0IRSI8"
+    },
+    {
+      "hunter": "Amber Freidlein",
+      "target": "Cody Lipworth",
+      "code": "ISTIIZ"
+    },
+    {
+      "hunter": "Cody Lipworth",
+      "target": "David Levitt",
+      "code": "UIDOZ2"
+    },
+    {
+      "hunter": "David Levitt",
+      "target": "Michael Markowitz",
+      "code": "HU9MTQ"
+    },
+    {
+      "hunter": "Michael Markowitz",
+      "target": "Sian Temkin",
+      "code": "X7G4R9"
+    },
+    {
+      "hunter": "Sian Temkin",
+      "target": "Juliana Hirsch",
+      "code": "Q2J8D1"
+    },
+    {
+      "hunter": "Juliana Hirsch",
+      "target": "Eden Dworcan",
+      "code": "B5Z3T4"
+    },
+    {
+      "hunter": "Eden Dworcan",
+      "target": "Ari Symons",
+      "code": "F7B2X1"
+    },
+    {
+      "hunter": "Ari Symons",
+      "target": "Hannah Benson",
+      "code": "L81RKU"
+    },
+    {
+      "hunter": "Adam Gordon",
+      "target": "Sienna Silberman",
+      "code": "F4TG9S"
+    },
+    {
+      "hunter": "Sienna Silberman",
+      "target": "Ben Meltzer",
+      "code": "PK3DR9"
+    },
+    {
+      "hunter": "Ben Meltzer",
+      "target": "Tyler Cimring",
+      "code": "J8GF4D"
+    },
+    {
+      "hunter": "Ari Symons",
+      "target": "Adam Gordon",
+      "code": "H5NM2X"
+    },
+    {
+      "hunter": "Tyler Cimring",
+      "target": "Jacob Defries",
+      "code": "X7L9QM"
+    },
+    {
+      "hunter": "Jacob Defries",
+      "target": "Adam Goldberg",
+      "code": "D3TZV5"
+    },
+    {
+      "hunter": "Hannah Benson",
+      "target": "Ari Symons",
+      "code": "L81RKU"
+    },
+    {
+      "hunter": "Adam Goldberg",
+      "target": "Leora Joffe",
+      "code": "3A5GQU"
+    }
+  ]
+}

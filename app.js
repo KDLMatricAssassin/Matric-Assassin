@@ -29,17 +29,17 @@ function initializeGameData() {
         Sasha Rubenstein --> Sam Joffe\tPQK6E2
         Sam Joffe --> Leor Friedman\t2Y53TN
         Leor Friedman --> Leora Boner\tLD3BIX
-        Leora Boner --> Josh Bayhack\tH1X9M2
+        Leora Boner --> Tali Smith\tH1X9M2
         Josh Bayhack --> Chad Goldberg\tVQAF9T
         Chad Goldberg --> Tyron Lasovsky\tMMRF4N
-        Tyron Lasovsky --> Tali Smith\tDD2ZOV
+        Tyron Lasovsky --> Josh Bayhack\tDD2ZOV
         Tali Smith --> Alex Hirshowitz\t4G31PT
         Alex Hirshowitz --> Ella Barnett\tJXR0HD
         Ella Barnett --> Harvey Joshua\tZ5DKJ5
         Harvey Joshua --> Jamie Kissos\tNKJA87
         Jamie Kissos --> Seth Sklar\tSGRKSN
-        Seth Sklar --> Gideon Bloom\tAVZQTV
-        Gideon Bloom --> Josh Galgut\tQTUVNO
+        Levi Raff --> Gideon Bloom\tAVZQTV
+        Gideon Bloom --> Joshua Galgut\tQTUVNO
         Joshua Galgut --> Adam Lyons\tQ6HRW9
         Adam Lyons --> Tali Sack\tTFHSZ1
         Tali Sack --> Dinah Worms\tLENR3V
@@ -61,8 +61,8 @@ function initializeGameData() {
         Jamie Jackson --> Lily-Rose Brenner\t47W0WX
         Lily-Rose Brenner --> Emily Joffe\t06BJMJ
         Emily Joffe --> Rebbeca Jellin\t9QGFL4
-        Rebbeca Jellin --> Levi Sweidan\t6MZSHY
-        Levi Sweidan --> Sabrina Cohen\t0DE5TC
+        Rebbeca Jellin --> Mika Sacharowitz\t6MZSHY
+        Mika Sacharowitz --> Sabrina Cohen\t0DE5TC
         Sabrina Cohen --> Jayce Katz\tSCISHH
         Jayce Katz --> Tyla Rothstein\tXW1OM0
         Tyla Rothstein --> Doron Sandler\t0JPU31
@@ -73,10 +73,10 @@ function initializeGameData() {
         Jacob Maloon --> Aidan Cohen\tP2C2MO
         Aidan Cohen --> Sam Gewer\t53EA5P
         Sam Gewer --> Levi Raff\tXLETPI
-        Levi Raff --> Sage Klug\tVE8T33
+        Seth Sklar --> Sage Klug\tVE8T33
         Sage Klug --> Lindy Kolman\tWPD7IS
         Lindy Kolman --> Zach Karan\tEOXN5Q
-        Zach Karan --> Dakota Trakman\t981HWC
+        Zach Karan --> Jayden Sacker\t981HWC
         Dakota Trakman --> Madison Williams\tQXCI4Y
         Madison Williams --> Savanna Shortridge\t8SHI3Z
         Savanna Shortridge --> Ella Lewis\tU1HW8O
@@ -130,8 +130,8 @@ function initializeGameData() {
         Jami Levin --> Sarah Alexander\tI6G657
         Sarah Alexander --> Jordana Sundelson\tP9J0W4
         Jordana Sundelson --> Bailey Lipworth\tFG85RS
-        Bailey Lipworth --> Leah Kerr-Phillps\tW92ATY
-        Leah Kerr-Phillips --> Jayden Sacker\t2HE5XC
+        Bailey Lipworth --> Leah Kerr-Phillips\tW92ATY
+        Leah Kerr-Phillips --> Dakota Trakman\t2HE5XC
         Tayla Smith --> Amber Freidlein\t0IRSI8
         Amber Freidlein --> Cody Lipworth\tISTIIZ
         Cody Lipworth --> David Levitt\tUIDOZ2
@@ -139,14 +139,15 @@ function initializeGameData() {
         Michael Markowitz --> Sian Temkin\tX7G4R9
         Sian Temkin --> Juliana Hirsch\tQ2J8D1
         Juliana Hirsch --> Eden Dworcan\tB5Z3T4
-        Eden Dworcan --> Adam Gordon\tF7B2X1
+        Eden Dworcan --> Hannah Benson\tF7B2X1
         Adam Gordon --> Sienna Silberman\tF4TG9S
         Sienna Silberman --> Ben Meltzer\tPK3DR9
-        Ben Meltzer --> Ari Symons\tJ8GF4D
-        Ari Symons --> Tyler Cimring\tH5NM2X
+        Ben Meltzer --> Tyler Cimring\tJ8GF4D
+        Ari Symons --> Adam Gordon\tH5NM2X
         Tyler Cimring --> Jacob Defries\tX7L9QM
-        Jacob Defries --> Hannah Benson\tD3TZV5
-        Hannah Benson --> Leora Joffe\tL81RKU
+        Jacob Defries --> Adam Goldberg\tD3TZV5
+        Hannah Benson --> Ari Symons\tL81RKU
+        Adam Goldberg --> Leora Joffe\t3A5GQU
     `;
 
     // Process player data
@@ -1258,15 +1259,43 @@ function handleOutsideClick(e) {
 function updateAdminStats() {
     if (!document.getElementById('total-players')) return;
     
+    const now = new Date();
     const totalPlayers = gameData.players.length;
-    const activePlayers = gameData.players.filter(p => p.status === 'active').length;
-    const eliminatedPlayers = gameData.players.filter(p => p.status === 'eliminated').length;
-    const suspendedPlayers = gameData.players.filter(p => p.suspendedUntil && new Date(p.suspendedUntil) > new Date()).length;
+    
+    // Clear any expired suspensions
+    gameData.players.forEach(player => {
+        if (player.suspendedUntil && new Date(player.suspendedUntil) <= now) {
+            player.suspendedUntil = null;
+            if (player.status === 'suspended') {
+                player.status = 'active';
+            }
+        }
+    });
+    
+    // Count players in each status
+    let activeCount = 0;
+    let eliminatedCount = 0;
+    let suspendedCount = 0;
+
+    gameData.players.forEach(player => {
+        const isSuspended = player.status === 'suspended' || 
+                          (player.suspendedUntil && new Date(player.suspendedUntil) > now);
+
+        if (player.status === 'eliminated') {
+            eliminatedCount++;
+        } else if (isSuspended) {
+            suspendedCount++;
+        } else {
+            activeCount++;
+        }
+    });
+    
     const totalKills = gameData.players.reduce((sum, player) => sum + (player.eliminations || 0), 0);
     
+    // Update the stats display
     document.getElementById('total-players').textContent = totalPlayers;
-    document.getElementById('active-players-count').textContent = activePlayers;
-    document.getElementById('eliminated-players-count').textContent = eliminatedPlayers;
+    document.getElementById('active-players-count').textContent = activeCount;
+    document.getElementById('eliminated-players-count').textContent = eliminatedCount;
     
     // Add or update suspended players count
     let suspendedCountEl = document.getElementById('suspended-players');
@@ -1276,13 +1305,13 @@ function updateAdminStats() {
         if (statsContainer) {
             statsContainer.innerHTML += `
                 <div class="stat-item">
-                    <span class="stat-value" id="suspended-players">${suspendedPlayers}</span>
+                    <span class="stat-value" id="suspended-players">${suspendedCount}</span>
                     <span class="stat-label">Suspended</span>
                 </div>
             `;
         }
     } else {
-        suspendedCountEl.textContent = suspendedPlayers;
+        suspendedCountEl.textContent = suspendedCount;
     }
     document.getElementById('total-kills').textContent = totalKills;
     
@@ -1437,57 +1466,28 @@ function suspendPlayer(playerId) {
     };
 }
 
-// Apply suspension with specified duration
-function applySuspension(playerId, days) {
-    const player = gameData.players.find(p => p._id === playerId);
-    if (!player) return;
-    
-    // Set suspension for specified number of days from now
-    const suspendedUntil = new Date();
-    suspendedUntil.setDate(suspendedUntil.getDate() + days);
-    player.suspendedUntil = suspendedUntil.toISOString();
-    
-    // Close the modal
-    document.getElementById('suspend-player-modal').classList.remove('active');
-    
-    // Update UI
-    updateAdminStats();
-    renderPlayersList();
-    showPlayerDetails(playerId);
-    
-    // Show success message with duration
-    let durationText = '';
-    if (days === 1) {
-        durationText = '1 day';
-    } else if (days < 30) {
-        durationText = `${days} days`;
-    } else if (days === 30) {
-        durationText = '1 month';
-    } else if (days < 365) {
-        durationText = `${Math.round(days/30)} months`;
-    } else {
-        durationText = '1 year';
-    }
-    
-    showNotification(
-        `Player ${player.name} has been suspended for ${durationText} (until ${new Date(suspendedUntil).toLocaleDateString()})`,
-        'success'
-    );
-    
-    // Save changes
-    saveToLocalStorage();
-}
+
 
 // Unsuspend a player
 function unsuspendPlayer(playerId) {
     const player = gameData.players.find(p => p._id === playerId);
     if (!player) return;
     
-    // Remove suspension
+    // Only unsuspend if player is actually suspended
+    if (!player.suspendedUntil) {
+        showNotification('Player is not currently suspended', 'error');
+        return;
+    }
+    
+    // Remove suspension and set status back to active if not eliminated
     delete player.suspendedUntil;
+    if (player.status !== 'eliminated') {
+        player.status = 'active';
+    }
     
     // Update UI
     updateAdminStats();
+    updateGameStats(); // Update main feed stats
     renderPlayersList();
     showPlayerDetails(playerId);
     
@@ -1580,42 +1580,77 @@ function switchTab(e) {
 
 // Update game statistics
 function updateGameStats() {
+    console.log('Updating game stats...');
+    
     // Get the stat value elements
     const activeEl = document.querySelector('#active-stat .stat-value');
     const eliminatedEl = document.querySelector('#eliminated-stat .stat-value');
     const suspendedEl = document.querySelector('#suspended-stat .stat-value');
     const daysLeftEl = document.querySelector('#days-left-stat .stat-value');
+    const totalEl = document.querySelector('#total-stat .stat-value');
     
-    if (!activeEl || !eliminatedEl || !suspendedEl || !daysLeftEl) return;
+    const now = new Date();
+    let suspensionCleared = false;
+
+    // First, clear any expired suspensions
+    gameData.players.forEach(player => {
+        if (player.suspendedUntil && new Date(player.suspendedUntil) <= now) {
+            player.suspendedUntil = null;
+            if (player.status === 'suspended') {
+                player.status = 'active'; // Reset status to active when suspension expires
+                suspensionCleared = true;
+            }
+        }
+    });
+
+    // Count players in each status
+    let activeCount = 0;
+    let eliminatedCount = 0;
+    let suspendedCount = 0;
+    const totalPlayers = gameData.players.length;
+
+    gameData.players.forEach(player => {
+        const isSuspended = player.status === 'suspended' || 
+                          (player.suspendedUntil && new Date(player.suspendedUntil) > now);
+
+        if (player.status === 'eliminated') {
+            eliminatedCount++;
+        } else if (isSuspended) {
+            suspendedCount++;
+        } else {
+            activeCount++;
+        }
+    });
+
+    // Update the UI elements directly
+    if (totalEl) totalEl.textContent = totalPlayers;
+    if (activeEl) activeEl.textContent = activeCount;
+    if (eliminatedEl) eliminatedEl.textContent = eliminatedCount;
+    if (suspendedEl) suspendedEl.textContent = suspendedCount;
     
-    // Calculate player counts
-    const activePlayers = gameData.players.filter(p => p.status === 'active').length;
-    const eliminatedPlayers = gameData.players.filter(p => p.status === 'eliminated').length;
-    const suspendedPlayers = gameData.players.filter(p => p.suspendedUntil && new Date(p.suspendedUntil) > new Date()).length;
-    
-    // Update the stats display
-    activeEl.textContent = activePlayers;
-    eliminatedEl.textContent = eliminatedPlayers;
-    suspendedEl.textContent = suspendedPlayers;
-    
-    // Calculate days left until game ends (July 4th, 2025)
-    const gameEndDate = new Date('2025-07-04');
-    const today = new Date();
-    const diffTime = gameEndDate - today;
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    // Update days left display
-    daysLeftEl.textContent = diffDays > 0 ? diffDays : 0;
-    
-    // Also update the game end date in the admin panel if it exists
-    const gameEndDateEl = document.getElementById('game-end-date');
-    if (gameEndDateEl) {
-        gameEndDateEl.textContent = `Ends in ${diffDays} days (July 4th, 2025)`;
+    // Update days left if the element exists
+    if (daysLeftEl) {
+        const gameEndDate = new Date('2025-07-04');
+        const today = new Date();
+        const diffTime = gameEndDate - today;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        daysLeftEl.textContent = diffDays > 0 ? diffDays : 0;
     }
-    
-    // Update leaderboard and admin stats
-    updateLeaderboard();
-    updateAdminStats();
+
+    // Also update the admin stats and UI if a suspension was cleared
+    if (suspensionCleared) {
+        updateAdminStats();
+        renderPlayersList();
+        updateLeaderboard();
+    } else {
+        // Still update admin stats to ensure consistency
+        updateAdminStats();
+    }
+
+    // Save any changes (like cleared suspensions)
+    if (suspensionCleared) {
+        saveToLocalStorage();
+    }
 }
 
 // Render posts in the feed
@@ -1924,20 +1959,61 @@ function checkSuspensions() {
     let updated = false;
     
     gameData.players.forEach(player => {
-        if (player.status === 'suspended' && player.suspendedUntil) {
+        if (player.suspendedUntil) {
             const suspendEnd = new Date(player.suspendedUntil);
             if (now >= suspendEnd) {
-                player.status = 'active';
+                console.log(`Suspension ended for player: ${player.name}`);
+                // Only update if player wasn't eliminated during suspension
+                if (player.status !== 'eliminated') {
+                    player.status = 'active';
+                    console.log(`Player ${player.name} status set to active`);
+                }
                 delete player.suspendedUntil;
                 updated = true;
-                showAdminMessage(`Player ${player.name}'s suspension has ended.`);
+                
+                // Show notification in the UI
+                const notification = document.createElement('div');
+                notification.className = 'notification success';
+                notification.textContent = `Player ${player.name}'s suspension has ended.`;
+                document.body.appendChild(notification);
+                
+                // Remove notification after 5 seconds
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+                
+                // Show notification to the player if they're logged in
+                const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                if (currentUser && currentUser._id === player._id) {
+                    const playerNotification = document.createElement('div');
+                    playerNotification.className = 'notification success';
+                    playerNotification.textContent = 'Your suspension has ended! Welcome back!';
+                    document.body.appendChild(playerNotification);
+                    
+                    setTimeout(() => {
+                        playerNotification.remove();
+                    }, 5000);
+                }
             }
         }
     });
     
     if (updated) {
-        saveToLocalStorage();
+        console.log('Updating UI after suspension expiration');
+        // Update all relevant UI components
+        updateAdminStats();
+        updateGameStats();
         renderPlayersList();
+        updateLeaderboard();
+        
+        // Save changes to localStorage
+        saveToLocalStorage();
+        
+        // Force a re-render of any player details that might be open
+        const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        if (currentUser && currentUser._id) {
+            showPlayerDetails(currentUser._id);
+        }
     }
     
     // Check again in 1 minute
@@ -1947,18 +2023,109 @@ function checkSuspensions() {
 // Unsuspend a player manually
 function unsuspendPlayer(playerId) {
     const player = gameData.players.find(p => p._id === playerId);
-    if (!player || player.status !== 'suspended') return;
+    if (!player || player.status !== 'suspended') {
+        const notification = document.createElement('div');
+        notification.className = 'notification error';
+        notification.textContent = 'Player is not currently suspended or not found';
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 5000);
+        return;
+    }
     
     player.status = 'active';
     delete player.suspendedUntil;
     
     // Update UI
+    updateGameStats();
+    updateAdminStats();
     renderPlayersList();
     updateLeaderboard();
+    
+    // Save changes
     saveToLocalStorage();
     
-    // Show success message
-    showAdminMessage(`Player ${player.name} has been unsuspended.`);
+    // Show success notification
+    const successNotification = document.createElement('div');
+    successNotification.className = 'notification success';
+    successNotification.textContent = `Player ${player.name} has been unsuspended.`;
+    document.body.appendChild(successNotification);
+    setTimeout(() => successNotification.remove(), 5000);
+}
+
+// Apply suspension to a player for a specific number of days
+function applySuspension(playerId, days) {
+    const player = gameData.players.find(p => p._id === playerId);
+    if (!player) {
+        console.error('Player not found:', playerId);
+        return;
+    }
+    
+    // Only allow suspending active players
+    if (player.status !== 'active') {
+        const notification = document.createElement('div');
+        notification.className = 'notification error';
+        notification.textContent = `Cannot suspend player with status: ${player.status}`;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 5000);
+        return;
+    }
+    
+    try {
+        // Set suspension for specified number of days from now
+        const suspendedUntil = new Date();
+        suspendedUntil.setDate(suspendedUntil.getDate() + days);
+        player.suspendedUntil = suspendedUntil.toISOString();
+        player.status = 'suspended';
+        
+        // Close the modal if it's open
+        const modal = document.getElementById('suspend-player-modal');
+        if (modal) {
+            modal.classList.remove('active');
+        }
+        
+        // Update UI
+        updateGameStats();
+        updateAdminStats();
+        renderPlayersList();
+        updateLeaderboard();
+        
+        // Format duration text for notification
+        let durationText = '';
+        if (days === 1) {
+            durationText = '1 day';
+        } else if (days < 30) {
+            durationText = `${days} days`;
+        } else if (days === 30) {
+            durationText = '1 month';
+        } else if (days < 365) {
+            durationText = `${Math.round(days/30)} months`;
+        } else {
+            durationText = '1 year';
+        }
+        
+        // Show success notification
+        const successNotification = document.createElement('div');
+        successNotification.className = 'notification success';
+        successNotification.textContent = `Player ${player.name} has been suspended for ${durationText} (until ${new Date(suspendedUntil).toLocaleDateString()})`;
+        document.body.appendChild(successNotification);
+        setTimeout(() => successNotification.remove(), 5000);
+        
+        // Save changes
+        saveToLocalStorage();
+        
+        // Start checking for expired suspensions if not already running
+        if (typeof window.suspensionCheckInterval === 'undefined') {
+            checkSuspensions();
+        }
+        
+    } catch (error) {
+        console.error('Error in applySuspension:', error);
+        const errorNotification = document.createElement('div');
+        errorNotification.className = 'notification error';
+        errorNotification.textContent = 'Failed to suspend player. Please try again.';
+        document.body.appendChild(errorNotification);
+        setTimeout(() => errorNotification.remove(), 5000);
+    }
 }
 
 // Make functions available globally
@@ -2180,6 +2347,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const rulesModal = document.getElementById('rules-modal');
     const closeRulesBtn = document.getElementById('close-rules-modal');
     
+    // Set up credits modal
+    const creditsBtn = document.getElementById('credits-btn');
+    const creditsModal = document.getElementById('credits-modal');
+    const closeCreditsBtn = document.getElementById('close-credits-modal');
+    
     // Set up image modal
     const imageModal = document.getElementById('image-modal');
     const closeImageModal = document.getElementById('close-image-modal');
@@ -2213,13 +2385,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
+    // Set up credits modal
+    if (creditsBtn && creditsModal) {
+        creditsBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            creditsModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+    }
+    
+    if (closeCreditsBtn) {
+        closeCreditsBtn.addEventListener('click', () => {
+            creditsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+    }
+    
     // Close modals when clicking outside of them
     window.addEventListener('click', (e) => {
         if (e.target === rulesModal) {
             rulesModal.style.display = 'none';
             document.body.style.overflow = 'auto';
-        }
-        if (e.target === imageModal) {
+        } else if (e.target === creditsModal) {
+            creditsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        } else if (e.target === imageModal) {
             closeImageModalFunc();
         }
     });

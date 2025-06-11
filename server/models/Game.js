@@ -1,5 +1,66 @@
 const mongoose = require('mongoose');
 
+const postSchema = new mongoose.Schema({
+  content: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ['pending', 'approved', 'rejected'],
+    default: 'pending'
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now
+  },
+  approvedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
+}, { timestamps: true });
+
+const playerStatusSchema = new mongoose.Schema({
+  player: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ['alive', 'eliminated', 'suspended'],
+    default: 'alive'
+  },
+  eliminatedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  eliminationDate: {
+    type: Date
+  },
+  eliminationProof: {
+    type: String // URL to image/video
+  },
+  eliminationApproved: {
+    type: Boolean,
+    default: false
+  },
+  approvedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
+}, { timestamps: true });
+
 const gameSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -36,6 +97,13 @@ const gameSchema = new mongoose.Schema({
       default: true
     }
   }],
+  // Game posts (announcements, updates, etc.)
+  posts: [postSchema],
+  
+  // Player statuses
+  playerStatuses: [playerStatusSchema],
+  
+  // Game configuration
   eliminationRules: {
     requiresVideo: {
       type: Boolean,

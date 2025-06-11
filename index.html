@@ -11,9 +11,9 @@
     <!-- Login Screen -->
     <div id="login-screen" class="login-container">
         <div class="login-logo">
-            <i class="fas fa-user-secret"></i>
+            <img src="logo.png" alt="Matric Assassin Logo" class="login-logo-img">
         </div>
-        <h1 class="login-title">Senior Assassin</h1>
+        <h1 class="login-title">Matric Assassin</h1>
         <div class="form-group">
             <input type="text" id="player-code" class="form-control" placeholder="Enter your code">
         </div>
@@ -86,16 +86,21 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <i class="fas fa-user-secret"></i>
-                        <span>Assassin Network</span>
+                        <button id="mobile-menu-toggle" class="mobile-menu-toggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <img src="logo.png" alt="Matric Assassin Logo" class="logo-img">
+                        <span>Matric Assassin</span>
                     </div>
-                    <div>
+                    <div class="header-actions">
                         <button id="admin-panel-toggle" class="btn btn-admin">
                             <i class="fas fa-shield-alt"></i> Admin
                         </button>
-                        <button id="logout-btn" class="btn btn-logout">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
+                        <div class="header-buttons">
+                            <button id="logout-btn" class="btn btn-icon" title="Logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -137,6 +142,9 @@
                         </a>
                         <a href="#" id="rules-btn" class="nav-link">
                             <i class="fas fa-book"></i> Rules
+                        </a>
+                        <a href="#" id="credits-btn" class="nav-link">
+                            <i class="fas fa-star"></i> Credits
                         </a>
                     </nav>
                 </aside>
@@ -263,6 +271,10 @@
                 <div class="stat-card">
                     <div class="stat-value" id="eliminated-players-count">0</div>
                     <div class="stat-label">Eliminated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="suspended-players-count">0</div>
+                    <div class="stat-label">Suspended</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="total-kills">0</div>
@@ -492,6 +504,38 @@
                     <button class="btn btn-primary" onclick="savePlayerEdits()">
                         Save Changes
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Credits Modal -->
+    <div id="credits-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-credits-modal">&times;</span>
+            <h2>Special Thanks</h2>
+            <div class="credits-content">
+                <p>We would like to extend our deepest gratitude to the following individuals who made this Matric Assassin experience possible:</p>
+                
+                <div class="credits-section">
+                    <h3>Initiative Team</h3>
+                    <ul>
+                        <li>Tana Lyons</li>
+                        <li>Ethan Atie</li>
+                        <li>Gadi Crouse</li>
+                        <li>Tevin Stoch</li>
+                    </ul>
+                    <p>For coming up with this initiative so the matrics could have some fun and release their stress before exams start.</p>
+                </div>
+                
+                <div class="credits-section">
+                    <h3>Development</h3>
+                    <p>Yotam Limor</p>
+                    <p>For creating this website and making sure everything was correct and working.</p>
+                </div>
+                
+                <div class="credits-footer">
+                    <p>Thank you for making Matric Assassin 2025 an unforgettable experience!</p>
                 </div>
             </div>
         </div>
