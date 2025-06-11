@@ -226,6 +226,87 @@ header {
     margin-top: 20px;
 }
 
+/* Right Sidebar */
+.right-sidebar {
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+}
+
+/* Game Stats Section */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 12px;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.stat-item {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.stat-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 4px;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+/* Force 2x2 layout */
+.stats-grid {
+    display: grid !important;
+    grid-template-areas:
+        "active-stat eliminated-stat"
+        "suspended-stat days-left-stat";
+}
+
+#active-stat { grid-area: active-stat; }
+#eliminated-stat { grid-area: eliminated-stat; }
+#suspended-stat { grid-area: suspended-stat; }
+#days-left-stat { grid-area: days-left-stat; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stat-item {
+        padding: 12px 8px;
+        min-height: 70px;
+    }
+    
+    .stat-value {
+        font-size: 20px;
+    }
+    
+    .stat-label {
+        font-size: 10px;
+    }
+}
+
 /* Sidebar */
 .sidebar {
     position: sticky;
@@ -1416,20 +1497,28 @@ header {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
     font-weight: 500;
-    margin-left: 10px;
+    background-color: var(--light);
+    color: var(--dark);
 }
 
-.status-admin {
-    background-color: #6a0dad;
-    color: white;
+.status-badge.status-eliminated {
+    background-color: #f8d7da;
+    color: #721c24;
 }
 
-.status-admin .status-dot {
-    background-color: white;
+.status-badge.status-active {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.status-suspended {
+    background-color: #fff3cd;
+    color: #856404;
+    white-space: nowrap;
 }
 
 .status-dot {
@@ -1783,19 +1872,98 @@ header {
     justify-content: flex-end;
 }
 
-.actions .btn {
+.actions {
+    position: relative;
+    display: inline-block;
+}
+
+.actions .btn-more {
     width: 32px;
     height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
-    border-radius: 6px;
+    background: none;
     border: 1px solid #ddd;
-    background: white;
-    color: var(--dark);
+    border-radius: 4px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    padding: 0;
+    transition: background-color 0.2s;
+}
+
+.actions .btn-more:hover {
+    background-color: #f5f5f5;
+}
+
+.action-dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 4px;
+    z-index: 1000;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.action-dropdown.active {
+    display: block;
+}
+
+.action-dropdown button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #333;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.action-dropdown button:hover {
+    background-color: #f8f9fa;
+}
+
+.action-dropdown .divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 4px 0;
+}
+
+.action-dropdown .danger {
+    color: #dc3545;
+}
+
+.action-dropdown .danger:hover {
+    background-color: #fff5f5 !important;
+}
+
+.action-dropdown .warning {
+    color: #e6a700;
+}
+
+.action-dropdown .warning:hover {
+    background-color: #fff9e6 !important;
+}
+
+.action-dropdown .success {
+    color: #28a745;
+}
+
+.action-dropdown .success:hover {
+    background-color: #f0fff4 !important;
+}
+
+.action-dropdown i {
+    width: 20px;
+    margin-right: 8px;
+    text-align: center;
 }
 
 .actions .btn:hover {
