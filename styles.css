@@ -317,52 +317,72 @@ header {
     display: none; /* Keep hidden as we're not using it anymore */
 }
 
-/* Responsive Sidebar & Navigation */
+/* Sidebar & Navigation */
 .sidebar {
     background: #f8f9fa;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    padding: 15px 0;
+    margin-bottom: 15px;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
 }
 
 .sidebar-nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+    gap: 0;
     margin: 0;
-    padding: 0;
+    padding: 0 10px;
     list-style: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    padding-bottom: 10px;
+}
+
+/* Hide scrollbar for Chrome/Safari */
+.sidebar-nav::-webkit-scrollbar {
+    display: none;
 }
 
 .sidebar-nav a {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding: 10px 15px;
     background: white;
     color: #333;
     text-decoration: none;
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 500;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     transition: all 0.2s ease;
-    flex: 1 0 calc(50% - 10px);
-    min-width: 120px;
-    max-width: calc(50% - 10px);
-    text-align: center;
-    justify-content: center;
+    min-width: 80px;
+    white-space: nowrap;
+    margin: 0 5px;
+    flex-shrink: 0;
 }
 
-.sidebar-nav a:hover {
+.sidebar-nav a i {
+    font-size: 1.2rem;
+    margin: 0 0 5px 0;
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.sidebar-nav a span {
+    display: block;
+    font-size: 0.7rem;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a.active {
     background: var(--primary);
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-.sidebar-nav i {
-    margin-right: 8px;
-    font-size: 1rem;
 }
 
 /* Responsive Adjustments */
@@ -371,7 +391,7 @@ header {
         display: flex;
         flex-direction: column;
         gap: 15px;
-        padding: 0 10px;
+        padding: 0 5px;
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
@@ -380,41 +400,41 @@ header {
     .content-area {
         width: 100%;
         margin: 0;
-        padding: 0;
+        padding: 0 5px;
     }
     
     .sidebar {
         width: 100%;
-        margin: 0 0 15px 0;
-        padding: 12px;
+        margin: 0 0 10px 0;
+        padding: 5px 0;
         box-sizing: border-box;
+        background: transparent;
+        box-shadow: none;
     }
     
     .sidebar-nav {
-        gap: 8px;
+        gap: 0;
+        padding: 5px 5px 15px 5px;
     }
     
     .sidebar-nav a {
-        flex: 1 0 calc(33.333% - 8px);
-        max-width: calc(33.333% - 8px);
-        padding: 10px 8px;
-        font-size: 0.8rem;
-        min-height: 44px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column;
+        padding: 8px 10px;
+        min-width: 70px;
+        margin: 0 3px;
+        border-radius: 8px;
     }
     
     .sidebar-nav i {
-        margin-right: 5px;
-        font-size: 0.9rem;
+        font-size: 1.1rem;
+        margin: 0 0 4px 0;
     }
     
     /* Adjust buttons for better touch targets */
     .btn {
-        min-height: 44px;
-        padding: 10px 15px;
-        font-size: 0.9rem;
+        min-height: 40px;
+        padding: 8px 12px;
+        font-size: 0.85rem;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -423,18 +443,33 @@ header {
     
     /* Adjust form elements */
     .form-control {
-        height: 44px;
-        font-size: 1rem;
+        height: 42px;
+        font-size: 0.95rem;
     }
     
     /* Adjust cards and containers */
     .card {
-        margin-bottom: 15px;
+        margin-bottom: 12px;
+        border-radius: 10px;
     }
     
     /* Make sure content is properly spaced */
     .content-section {
-        padding: 15px 0;
+        padding: 12px 0;
+    }
+    
+    /* Header adjustments */
+    header {
+        padding: 8px 0;
+    }
+    
+    .logo h1 {
+        font-size: 1.1rem;
+    }
+    
+    .header-actions .btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
     }
 }
 
