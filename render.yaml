@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: matric-assassin
+    env: node
+    buildCommand: npm install
+    startCommand: node server/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        fromDatabase:
+          name: mongodb
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+        minLength: 32
+        maxLength: 64
+    healthCheckPath: /
+    autoDeploy: true
