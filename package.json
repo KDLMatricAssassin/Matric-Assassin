@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "Matric Assassin Game",
   "main": "server/server.js",
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "scripts": {
     "start": "node server/server.js",
-    "dev": "nodemon server/server.js"
+    "dev": "nodemon server/server.js",
+    "build": "npm install --production && npm install -g nodemon",
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
     "express": "^4.18.2",
