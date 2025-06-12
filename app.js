@@ -1228,6 +1228,25 @@ function loginUser(user) {
     renderPosts();
     updateLeaderboard();
     
+    // Update target message in the feed
+    if (!user.isAdmin) {
+        const target = findPlayerById(user.target);
+        const playerNameEl = document.getElementById('player-name-display');
+        const playerCodeEl = document.getElementById('player-code-display');
+        const targetNameEl = document.getElementById('target-name-display');
+        
+        if (playerNameEl) playerNameEl.textContent = user.name || 'Player';
+        if (playerCodeEl) playerCodeEl.textContent = `#${user._id || '0000'}`.substring(0, 6);
+        if (targetNameEl) {
+            targetNameEl.textContent = target ? target.name : 'No target assigned';
+            // Add visual feedback if no target is assigned
+            if (!target) {
+                targetNameEl.style.color = '#6c757d';
+                targetNameEl.style.fontStyle = 'italic';
+            }
+        }
+    }
+    
     // Render players list for admin
     if (user.isAdmin) {
         renderPlayersList();

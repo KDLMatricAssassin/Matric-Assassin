@@ -1027,6 +1027,101 @@ header {
     }
 }
 
+/* Target Message Card */
+.target-message {
+    margin: 15px 0;
+    padding: 15px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 10px;
+    border-left: 4px solid #dc3545;
+}
+
+.target-message-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.target-icon {
+    font-size: 1.5rem;
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.target-message-text {
+    flex: 1;
+}
+
+.target-greeting {
+    margin: 0 0 5px 0;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.target-info {
+    margin: 0;
+    font-size: 1rem;
+    color: #212529;
+}
+
+.target-info strong {
+    color: #dc3545;
+}
+
+/* Responsive adjustments for target message */
+@media (max-width: 768px) {
+    .target-message {
+        margin: 10px 0;
+        padding: 12px;
+    }
+    
+    .target-message-content {
+        gap: 10px;
+    }
+    
+    .target-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+    }
+    
+    .target-greeting {
+        font-size: 0.85rem;
+    }
+    
+    .target-info {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .target-message {
+        padding: 10px;
+    }
+    
+    .target-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
+    }
+    
+    .target-greeting {
+        font-size: 0.8rem;
+        margin-bottom: 3px;
+    }
+    
+    .target-info {
+        font-size: 0.9rem;
+    }
+}
+
 /* Sidebar */
 .sidebar {
     position: sticky;
