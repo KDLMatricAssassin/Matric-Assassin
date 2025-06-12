@@ -1011,28 +1011,9 @@ const pendingEliminations = document.getElementById('pending-eliminations');
 const tabBtns = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.tab-content');
 
-// Toggle mobile menu
-function toggleMobileMenu() {
-    const sidebar = document.querySelector('.sidebar');
-    if (sidebar) {
-        sidebar.classList.toggle('mobile-visible');
-        document.body.classList.toggle('menu-open');
-    }
-}
-
-// Close mobile menu when clicking outside
+// Handle outside click for admin panel
 function handleOutsideClick(e) {
-    const sidebar = document.querySelector('.sidebar');
-    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    
-    if (sidebar && sidebar.classList.contains('mobile-visible') && 
-        !sidebar.contains(e.target) && 
-        e.target !== mobileMenuToggle && 
-        !mobileMenuToggle.contains(e.target)) {
-        toggleMobileMenu();
-    }
-    
-    // Existing admin panel close logic
+    // Admin panel close logic
     if (adminPanel && adminPanel.classList.contains('active') && 
         !adminPanel.contains(e.target) && 
         !adminPanelToggle.contains(e.target)) {
@@ -1051,14 +1032,7 @@ function init() {
     closeAdminPanel.addEventListener('click', toggleAdminPanel);
     document.addEventListener('click', handleOutsideClick);
     
-    // Mobile menu toggle
-    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-    if (mobileMenuToggle) {
-        mobileMenuToggle.addEventListener('click', function(e) {
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
-    }
+    // Mobile menu toggle removed - using responsive sidebar instead
     
     // Tab switching
     tabBtns.forEach(btn => {
