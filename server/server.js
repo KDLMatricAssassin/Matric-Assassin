@@ -12,6 +12,7 @@ const authRoutes = require('./routes/auth');
 const playerRoutes = require('./routes/players');
 const adminRoutes = require('./routes/admin');
 const gameRoutes = require('./routes/game');
+const postRoutes = require('./routes/posts');
 
 // Import middleware
 const { protect, admin } = require('./middleware/auth');
@@ -29,10 +30,54 @@ const io = socketIo(server, {
   }
 });
 
+// CORS Configuration
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl, postman)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:10000',
+      'http://127.0.0.1:10000',
+      'http://localhost:3000',
+      'http://127.0.0.1:3000'
+    ];
+    
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Content-Length', 'X-Requested-With'],
+  credentials: true,
+  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
+// Handle preflight requests
+app.options('*', cors(corsOptions));
+
+// Serve static files from the root directory (for frontend)
+app.use(express.static(path.join(__dirname, '..')));
+
+// API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/players', playerRoutes);
+app.use('/api/admin', protect, admin, adminRoutes);
+app.use('/api/game', protect, gameRoutes);
+app.use('/api/posts', postRoutes);
+
+// Handle React routing, return all requests to the frontend
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
+});
 
 // Socket.IO connection handling
 io.on('connection', (socket) => {
@@ -95,6 +140,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/players', playerRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/game', gameRoutes);
+app.use('/api/posts', postRoutes);
 
 // Protected admin routes
 app.use('/api/admin', protect, admin, adminRoutes);

@@ -1,0 +1,161 @@
+/* Eliminations History Styles */
+.eliminations-history h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.elimination-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid #f5f5f5;
+    transition: background-color 0.2s ease;
+}
+
+.elimination-item:last-child {
+    border-bottom: none;
+}
+
+.elimination-item:hover {
+    background-color: #f9f9f9;
+}
+
+.elimination-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: #ff6b6b;
+    font-size: 16px;
+}
+
+.elimination-details {
+    flex: 1;
+}
+
+.elimination-text {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.elimination-text strong {
+    color: #4a6cf7;
+}
+
+.elimination-time {
+    font-size: 12px;
+    color: #999;
+}
+
+.elimination-badge {
+    background-color: #ffebee;
+    color: #d32f2f;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+
+/* Suspended Players Styles */
+.suspended-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    border-bottom: 1px solid #f5f5f5;
+    transition: background-color 0.2s ease;
+    justify-content: space-between;
+}
+
+.suspended-item:last-child {
+    border-bottom: none;
+}
+
+.suspended-item:hover {
+    background-color: #f9f9f9;
+}
+
+.suspended-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #fff8e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: #ff8f00;
+    font-size: 16px;
+}
+
+.suspended-details {
+    flex: 1;
+}
+
+.suspended-text {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3px;
+}
+
+.suspended-text strong {
+    color: #333;
+    margin-right: 8px;
+}
+
+.suspended-badge {
+    background-color: #fff3e0;
+    color: #e65100;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+.suspended-time {
+    font-size: 12px;
+    color: #666;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.suspended-until {
+    font-size: 11px;
+    color: #999;
+    background: #f5f5f5;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .elimination-item,
+    .suspended-item {
+        padding: 10px 15px;
+        flex-wrap: wrap;
+    }
+    
+    .elimination-text,
+    .suspended-text {
+        font-size: 13px;
+    }
+    
+    .elimination-time,
+    .suspended-time {
+        font-size: 11px;
+    }
+    
+    .suspended-item button {
+        margin-top: 8px;
+        width: 100%;
+    }
+}

@@ -2,11 +2,11 @@
 const gameData = {
     players: [],
     admins: [
-        { name: 'Main Admin', code: 'ADMIN123' },
+        { name: 'Ethan Atie', code: 'ETHAN2025' },
         { name: 'Gadi Crouse', code: 'GADI2025' },
         { name: 'Tana Lyons', code: 'TANA2025' },
-        { name: 'Tevin Stoch', code: 'TEVIN2025' },
-        { name: 'Ethan Atie', code: 'ETHAN2025' }
+        { name: 'Yotam Limor', code: 'YOTAM2025' },
+        { name: 'Tevin Stoch', code: 'TEVIN2025' }
     ],
     currentUser: null,
     gameStatus: 'not_started', // Game starts as not started
@@ -23,132 +23,133 @@ function initializeGameData() {
     
     // Player data in the format: Player Name -> Target Name | Code
     const playerData = `
-        Leora Joffe --> Amy Moritz\t4J2Y2H
-        Amy Moritz --> Lia Levy\t0L5FUM
-        Lia Levy --> Sasha Rubenstein\t178ZY0
-        Sasha Rubenstein --> Sam Joffe\tPQK6E2
-        Sam Joffe --> Leor Friedman\t2Y53TN
-        Leor Friedman --> Leora Boner\tLD3BIX
-        Leora Boner --> Tali Smith\tH1X9M2
-        Josh Bayhack --> Chad Goldberg\tVQAF9T
-        Chad Goldberg --> Tyron Lasovsky\tMMRF4N
-        Tyron Lasovsky --> Josh Bayhack\tDD2ZOV
-        Tali Smith --> Alex Hirshowitz\t4G31PT
-        Alex Hirshowitz --> Ella Barnett\tJXR0HD
-        Ella Barnett --> Harvey Joshua\tZ5DKJ5
-        Harvey Joshua --> Jamie Kissos\tNKJA87
-        Jamie Kissos --> Seth Sklar\tSGRKSN
-        Levi Raff --> Gideon Bloom\tAVZQTV
-        Gideon Bloom --> Joshua Galgut\tQTUVNO
-        Joshua Galgut --> Adam Lyons\tQ6HRW9
-        Adam Lyons --> Tali Sack\tTFHSZ1
-        Tali Sack --> Dinah Worms\tLENR3V
-        Dinah Worms --> Eitan Greenblatt\tZT6I0K
-        Eitan Greenblatt --> Jaime Diamond\t89GEU2
-        Jaime Diamond --> Sara Joffe\tO2SWTR
-        Sara Joffe --> Tayla Cohen\tN20XJZ
-        Tayla Cohen --> Aviva Samuels\tJRB3V5
-        Aviva Samuels --> Cody Hirschman\tK5PVFA
-        Cody Hirschman --> Raz Oudmayer\t133GCW
-        Raz Oudmayer --> Mischa Suchard\tR5T8SU
-        Mischa Suchard --> Amelie Hirshowitz\tSX10HP
-        Amelie Hirshowitz --> Eliana Mervis\tGLUY05
-        Eliana Mervis --> Daniel Waisman\tFN8I2L
-        Daniel Waisman --> Adam Gratch\tKIIAMI
-        Adam Gratch --> Hannah Camberg\t9910Y6
-        Hannah Camberg --> Ella Gingell\t8CVIR8
-        Ella Gingell --> Jamie Jackson\tXU6OG6
-        Jamie Jackson --> Lily-Rose Brenner\t47W0WX
-        Lily-Rose Brenner --> Emily Joffe\t06BJMJ
-        Emily Joffe --> Rebbeca Jellin\t9QGFL4
-        Rebbeca Jellin --> Mika Sacharowitz\t6MZSHY
-        Mika Sacharowitz --> Sabrina Cohen\t0DE5TC
-        Sabrina Cohen --> Jayce Katz\tSCISHH
-        Jayce Katz --> Tyla Rothstein\tXW1OM0
-        Tyla Rothstein --> Doron Sandler\t0JPU31
-        Doron Sandler --> Gabriel Boyer\t12BFEX
-        Ben Levin --> Jadon Banfield\tXTMN4A
-        Jadon Banfield --> Eden Lyons\tS31WNM
-        Eden Lyons --> Jacob Maloon\tG93OWT
-        Jacob Maloon --> Aidan Cohen\tP2C2MO
-        Aidan Cohen --> Sam Gewer\t53EA5P
-        Sam Gewer --> Levi Raff\tXLETPI
-        Seth Sklar --> Sage Klug\tVE8T33
-        Sage Klug --> Lindy Kolman\tWPD7IS
-        Lindy Kolman --> Zach Karan\tEOXN5Q
-        Zach Karan --> Jayden Sacker\t981HWC
-        Dakota Trakman --> Madison Williams\tQXCI4Y
-        Madison Williams --> Savanna Shortridge\t8SHI3Z
-        Savanna Shortridge --> Ella Lewis\tU1HW8O
-        Ella Lewis --> Alexa Reubenson\tQM9Z8A
-        Alexa Reubenson --> Gabi Baily\tQ1359M
-        Gabi Baily --> Mia Jacobson\t7RG1UX
-        Demi Wulfsohn --> Ben Levin\tHHC4I2
-        Gabriel Boyer --> Jessica Sack\t744X3N
-        Jessica Sack --> Gabi Romberg\tYB7LAD
-        Gabi Romberg --> Yael Yanai\t50HC4Z
-        Yael Yanai --> Yotam Limor\tUCJMV6
-        Yotam Limor --> SJ Makgalemele\tJDHLLE
-        SJ Makgalemele --> Sam Kallner\tG2UR1O
-        Sam Kallner --> Sarah Kahanowitz\tPLJF5O
-        Sarah Kahanowitz --> Noa Herring\t4OERAC
-        Noa Herring --> Adam Schlosberg\t88TVCC
-        Adam Schlosberg --> Jamie Defries\t9V65YO
-        Jamie Defries --> Lexi Silverman\tWJ8GNH
-        Lexi Silverman --> Cameron Lyons\t3WL5HW
-        Cameron Lyons --> Alissa Kirkle\t380QA2
-        Alissa Kirkle --> Dunn Klaff\tHM0FJL
-        Dunn Klaff --> Sasha Gordon\t0QWEB2
-        Sasha Gordon --> Leah Joss\t22TY97
-        Leah Joss --> Gila Smith\tQLQL31
-        Gila Smith --> Kiara Cohen\tMDFAB2
-        Kiara Cohen --> Ethan Lunt\tAF0HJW
-        Ethan Lunt --> Cammi Dorfman\t6PFFSA
-        Cammi Dorfman --> Tayla Smith\t9ZPS3C
-        Jordan Ribeiro --> Jesse Silber\t15AJ28
-        Jesse Silber --> Mika Fanaroff\tJRKL3S
-        Mika Fanaroff --> Demi Lurie\tYUYCGX
-        Demi Lurie --> Eli Kagan\tWY7YKG
-        Eli Kagan --> Jordan Ribeiro\tXLDFHS
-        Jayden Sacker --> Jessica Woznica\tLZLI9V
-        Jessica Woznica --> Rory Pai\t2NKJ86
-        Rory Pai --> Brad Shill\tQL946W
-        Brad Shill --> Erin Dworkin\tMH6UHT
-        Erin Dworkin --> Hannah Duchan\t2TCGEU
-        Hannah Duchan --> Hannah Gordon\t59PT7H
-        Hannah Gordon --> Benji Furman\t20RXOQ
-        Benji Furman --> Gabi Camberg\t4MO2UJ
-        Gabi Camberg --> Teagan Goldsmith\tAFWWMH
-        Teagan Goldsmith --> Demi Toker\tHHVU6V
-        Demi Toker --> Tyra Kuper\t7PFRLH
-        Tyra Kuper --> Demi Wulfsohn\t2ZQ2Q8
-        Mia Jacobson --> Lexi Fine\t9TAPCH
-        Lexi Fine --> Ella Solomon\t7W6AIY
-        Ella Solomon --> Gaby Shankman\t952SOV
-        Gaby Shankman --> Sierra Sher\t7615DY
-        Sierra Sher --> Jami Levin\tSATV9T
-        Jami Levin --> Sarah Alexander\tI6G657
-        Sarah Alexander --> Jordana Sundelson\tP9J0W4
-        Jordana Sundelson --> Bailey Lipworth\tFG85RS
-        Bailey Lipworth --> Leah Kerr-Phillips\tW92ATY
-        Leah Kerr-Phillips --> Dakota Trakman\t2HE5XC
-        Tayla Smith --> Amber Freidlein\t0IRSI8
-        Amber Freidlein --> Cody Lipworth\tISTIIZ
-        Cody Lipworth --> David Levitt\tUIDOZ2
-        David Levitt --> Michael Markowitz\tHU9MTQ
-        Michael Markowitz --> Sian Temkin\tX7G4R9
-        Sian Temkin --> Juliana Hirsch\tQ2J8D1
-        Juliana Hirsch --> Eden Dworcan\tB5Z3T4
-        Eden Dworcan --> Hannah Benson\tF7B2X1
-        Adam Gordon --> Sienna Silberman\tF4TG9S
-        Sienna Silberman --> Ben Meltzer\tPK3DR9
-        Ben Meltzer --> Tyler Cimring\tJ8GF4D
-        Ari Symons --> Adam Gordon\tH5NM2X
-        Tyler Cimring --> Jacob Defries\tX7L9QM
-        Jacob Defries --> Adam Goldberg\tD3TZV5
-        Hannah Benson --> Ari Symons\tL81RKU
-        Adam Goldberg --> Leora Joffe\t3A5GQU
-    `;
+        Sarah Alexander --> Leah Josselowitz\tKUNVVT
+        Gabi Bailey --> Jordan Ribiero\tJMGRG3
+        Jadon Banfield --> Sam Kallner\tUPHQAB
+        Ella Barnett --> Adam Gratch\tS235J3
+        Josh Bayhack --> Savanna Shortridge\t1PQ3VU
+        Hannah Benson --> Tyler Cimring\tJ7UV5H
+        Gideon Bloom --> Jaime Diamond\t1D5ZNB
+        Leora Boner --> Hannah Benson\tATD4EO
+        Gabriel Boyer --> Jessica Woznica\t19QU2F
+        Lily-Rose Brenner --> Cami Lyons\t22Y234
+        Gabi Camberg --> Jamie Kissos\t25CT4K
+        Hannah Camberg --> Emily Joffe\tGGTPWZ
+        Tyler Cimring --> Lindy Kolman\tLKH6W9
+        Aidan Cohen --> Sage Klug\t1BXFUL
+        Kiara Cohen --> Gabi Romberg\tOHHDUU
+        Sabrina Cohen --> Mika Fanaroff\t6UIIYN
+        Tayla Cohen --> Noa Herring\t02FS2M
+        Jacob Defries --> Jessica Sack\tUVURP1
+        Jamie Defries --> Amy Moritz\t7ZLBZ8
+        Jaime Diamond --> Benji Furman\tMH8K3G
+        Cammi Dorfman --> Cody Hirschman\tSDQKNO
+        Hannah Duchen --> Gila Smith\tKHPDGL
+        Eden Dworcan --> Mia Jacobson\tP4WEWL
+        Erin Dworkin --> Leora Joffe\tTKZFHV
+        Mika Fanaroff --> Sara Joffe\tNUA4P7
+        Alexa Fine --> Alex Hirschowitz\tFB2VA7
+        Amber Friedlein --> Ethan Lunt\tB9ZELS
+        Leor Friedman --> Demi Toker\tB8HR9R
+        Benji Furman --> Sian Temkin\tPRQYBE
+        Josh Galgut --> Demi Wulfsohn\tBTX6AS
+        Sam Gewer --> Eitan Greenblatt\tWDZI63
+        Ella Gingell --> Jamie Defries\tUJA48O
+        Adam Goldberg --> Tyla Rothstein\t4FNW83
+        Chad Goldberg --> Demi Lurie\tTVZT5F
+        Teagan Goldsmith --> Gabi Camberg\t4W0MC5
+        Adam Gordon --> Lily-Rose Brenner\tEGDJN1
+        Hannah Gordon --> Alexa Reubenson\tQ244VL
+        Sasha Gordon --> Sam Gewer\tKM2MLU
+        Adam Gratch --> Daniel Waisman\tQY39V5
+        Eitan Greenblatt --> Tali Smith\tGFFV8U
+        Noa Herring --> Erin Dworkin\t4ENAI6
+        Cody Hirschman --> Amelie Hirschowitz\tVQASRX
+        Alex Hirschowitz --> Adam Gordon\tFITD4K
+        Amelie Hirschowitz --> Ari Symons\t29FFMD
+        Juliana Hirsh --> Ella Solomon\t79YNE1
+        Jaimie Jackson --> Jude Orbach\tYWTAL6
+        Mia Jacobson --> Gaby Shankman\tT3EVPP
+        Rebecca Jellin --> Gideon Bloom\t3BSCG7
+        Emily Joffe --> Tayla Cohen\tNEIUHI
+        Leora Joffe --> Levi Raff\tWHRMAF
+        Sam Joffe --> Eli Kagan\tG9C9N3
+        Sara Joffe --> Brad Shill\t626IKL
+        Harvey Joshua --> Jayden Sacker\tCZVFG3
+        Leah Josselowitz --> Jordana Sundelson\tLTUBWI
+        Asher Kagan --> Amber Friedlein\t4Q058M
+        Eli Kagan --> Dunn Klaff\t12IIDS
+        Sarah Kahanovitz --> Hannah Gordon\tFFPFW7
+        Sam Kallner --> Doron Sandler\t86RWFJ
+        Zach Karan --> Leora Boner\tY2ZD39
+        Jayce Katz --> Mischa Suchard\t4R3LQK
+        Alissa Kirkel --> Hannah Duchen\t4LCZV9
+        Jamie Kissos --> Jesse Silber\t3P365F
+        Dunn Klaff --> Rory Pai\tKAVBEC
+        Sage Klug --> Tyron Lasovsky\tR61LXC
+        Lindy Kolman --> Sienna Silbermann\t5NX9YP
+        Tyra Kuper --> Gabi Bailey\tJRXA6I
+        Tyron Lasovsky --> Levi Sweidan\tXL5VR2
+        Ben Levin --> Asher Kagan\tLINLZZ
+        Jami Levin --> Ella Barnett\t7AXN22
+        David Levitt --> Tali Sack\tKINNQZ
+        Lia Levy --> Kiara Cohen\tHBZC5A
+        Ella Lewis --> Leah Kerr-Phillips\tRQJH4R
+        Bailey Lipworth --> Cody Lipworth\t053VGN
+        Cody Lipworth --> Jayce Katz\tO1AQ9Q
+        Ethan Lunt --> Eden Dworcan\t6YR0BX
+        Demi Lurie --> Bailey Lipworth\tKP92GT
+        Adam Lyons --> Lia Levy\tDR9OBF
+        Cami Lyons --> Michael Markowitz\tFSG3QA
+        Eden Lyons --> Seth Sklar\tFCD9NE
+        SJ Makgalemele --> Gabriel Boyer\tGQL2OP
+        Jacob Maloon --> Cammi Dorfman\t68I18R
+        Michael Markowitz --> Zach Karan\tVBZ9GW
+        Ben Meltzer --> Tayla Smith\tT03VGB
+        Eliana Mervis --> Sasha Gordon\tQ4I4FA
+        Amy Moritz --> Eliana Mervis\tAH6THD
+        Jude Orbach --> Sabrina Cohen\tO3Y1OR
+        Raz Oudmayer --> Adam Lyons\tKRH44Y
+        Rory Pai --> Teagan Goldsmith\tXMUOKM
+        Leah Phillips --> Raz Oudmayer\t55N7PN
+        Levi Raff --> Tyra Kuper\tL47VUM
+        Alexa Reubenson --> Ella Lewis\t5T0LEJ
+        Jordan Ribiero --> Jacob Defries\tZYO1IY
+        Gabi Romberg --> Adam Schlosberg\tJJGZAS
+        Tyla Rothstein --> Hannah Camberg\t58K2E1
+        Sasha Rubenstein --> SJ Makgalemele\t1N83YH
+        Mika Sacharowitz --> Josh Bayhack\tM3LLOM
+        Jessica Sack --> Sierra Sher\t819ZIO
+        Tali Sack --> Sasha Rubenstein\t0D9535
+        Jayden Sacker --> David Levitt\tXEQ2DC
+        Aviva Samuels --> Ella Gingell\t550SFF
+        Doron Sandler --> Lexi Silverman\tO72DBD
+        Adam Schlosberg --> Harvey Joshua\tTSSA36
+        Gaby Shankman --> Leor Friedman\tL1U2GI
+        Sierra Sher --> Ben Meltzer\tOMJN3L
+        Brad Shill --> Mika Sacharowitz\tCDA1VW
+        Savanna Shortridge --> Chad Goldberg\tJEN7FD
+        Jesse Silber --> Alissa Kirkel\t8DIA82
+        Sienna Silbermann --> Josh Galgut\tC1UJ2A
+        Lexi Silverman --> Rebecca Jellin\tKT2Y1Y
+        Seth Sklar --> Jaimie Jackson\tB6UOS0
+        Gila Smith --> Jadon Banfield\tF0VPTV
+        Tali Smith --> Jacob Maloon\tCE2EFP
+        Tayla Smith --> Alexa Fine\tQ606WZ
+        Ella Solomon --> Yael Yanai\tG77JSW
+        Mischa Suchard --> Ben Levin\t5SYDU3
+        Jordana Sundelson --> Eden Lyons\tGPNUCV
+        Levi Sweidan --> Sarah Kahanovitz\tG3FPOY
+        Ari Symons --> Dinah Worms\tAQS3L2
+        Sian Temkin --> Aidan Cohen\tI53Q9F
+        Demi Toker --> Aviva Samuels\tMN24WK
+        Dakota Trakman --> Adam Goldberg\tJA21IE
+        Daniel Waisman --> Madison Williams\tCCMIMX
+        Madison Williams --> Dakota Trakman\t9JLWPT
+        Dinah Worms --> Jami Levin\t7OXI2J
+        Jessica Woznica --> Juliana Hirsh\tGXA8P2
+        Demi Wulfsohn --> Sam Joffe\tWC39YA
+        Yael Yanai --> Sarah Alexander\tFZGXLH`;
 
     // Process player data
     const playerMap = new Map();
@@ -222,37 +223,603 @@ function ensureGameDataStructures() {
     }
 }
 
+// Function to create a new post
+function createPost(content, imageFile = null, videoFile = null) {
+    const currentUser = gameData.players.find(p => p._id === gameData.currentUser);
+    if (!currentUser) return null;
+
+    const newPost = {
+        id: Date.now().toString(),
+        userId: currentUser._id,
+        userName: currentUser.name,
+        userImage: currentUser.image || null,
+        content: content,
+        imageUrl: null,
+        videoUrl: null,
+        timestamp: new Date().toISOString(),
+        likes: 0,
+        comments: [],
+        isAdminApproved: currentUser.isAdmin, // Auto-approve for admins
+        isPendingApproval: !currentUser.isAdmin // Needs approval if not admin
+    };
+
+    // Handle media files (in a real app, you would upload these to a server)
+    if (imageFile) {
+        // In a real app, you would upload the image and get a URL
+        newPost.imageUrl = URL.createObjectURL(imageFile);
+    } else if (videoFile) {
+        // In a real app, you would upload the video and get a URL
+        newPost.videoUrl = URL.createObjectURL(videoFile);
+    }
+
+    if (currentUser.isAdmin) {
+        // Add directly to posts if admin
+        gameData.posts.unshift(newPost);
+        renderPosts();
+    } else {
+        // Add to pending approvals if not admin
+        if (!gameData.pendingApprovals) gameData.pendingApprovals = [];
+        gameData.pendingApprovals.push(newPost);
+        showNotification('Your post has been submitted for admin approval.');
+    }
+
+    return newPost;
+}
+
+// Function to approve a post
+function approvePost(postId) {
+    if (!gameData.pendingApprovals) return;
+    
+    const postIndex = gameData.pendingApprovals.findIndex(p => p.id === postId);
+    if (postIndex === -1) return;
+    
+    const post = gameData.pendingApprovals[postIndex];
+    post.isAdminApproved = true;
+    post.isPendingApproval = false;
+    
+    // Move to main posts
+    gameData.posts.unshift(post);
+    gameData.pendingApprovals.splice(postIndex, 1);
+    
+    // Update UI
+    renderPosts();
+    renderPendingApprovals();
+}
+
+// Function to reject a post
+function rejectPost(postId) {
+    if (!gameData.pendingApprovals) return;
+    
+    const postIndex = gameData.pendingApprovals.findIndex(p => p.id === postId);
+    if (postIndex !== -1) {
+        gameData.pendingApprovals.splice(postIndex, 1);
+        renderPendingApprovals();
+    }
+}
+
+// Function to show notification
+function showNotification(message, isError = false) {
+    const notification = document.createElement('div');
+    notification.className = `notification ${isError ? 'error' : 'success'}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Function to fetch posts from the server
+async function fetchPosts() {
+    try {
+        const response = await fetch('/api/posts');
+        if (!response.ok) {
+            throw new Error('Failed to fetch posts');
+        }
+        const posts = await response.json();
+        gameData.posts = posts;
+        renderPosts();
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        showNotification('Failed to load posts', true);
+    }
+}
+
+function renderPosts() {
+    const postsContainer = document.getElementById('posts-container');
+    if (!postsContainer) return;
+    
+    // Sort posts by creation date (newest first)
+    const sortedPosts = [...(gameData.posts || [])].sort((a, b) => 
+        new Date(b.createdAt) - new Date(a.createdAt)
+    );
+    
+    if (sortedPosts.length === 0) {
+        postsContainer.innerHTML = `
+            <div class="no-posts">
+                <i class="fas fa-newspaper"></i>
+                <p>No posts yet. Be the first to post something!</p>
+            </div>
+        `;
+        return;
+    }
+    
+    postsContainer.innerHTML = sortedPosts.map(post => {
+        const user = post.user || {};
+        const isCurrentUser = user._id === gameData.currentUser?._id;
+        const isAdmin = gameData.currentUser?.role === 'admin';
+        const canDelete = isCurrentUser || isAdmin;
+        
+        // Format the timestamp
+        const postDate = new Date(post.createdAt || post.timestamp);
+        const formattedDate = postDate.toLocaleString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        return `
+            <div class="card post" id="post-${post._id}">
+                <div class="post-header">
+                    <div class="post-user">
+                        <div class="post-avatar">
+                            ${user.image ? 
+                                `<img src="${user.image}" alt="${user.name || 'User'}" onerror="this.onerror=null; this.parentElement.innerHTML='<i class=\'fas fa-user\'></i>'">` : 
+                                `<i class="fas fa-user"></i>`
+                            }
+                        </div>
+                        <div>
+                            <div class="post-username">${user.name || 'Anonymous'}</div>
+                            <div class="post-time" title="${postDate.toLocaleString()}">${formattedDate}</div>
+                        </div>
+                    </div>
+                    ${canDelete ? `
+                        <button class="btn btn-icon btn-sm" onclick="deletePost('${post._id}')" title="Delete post">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    ` : ''}
+                </div>
+                <div class="post-content">${post.content || ''}</div>
+                ${post.imageUrl ? `
+                    <div class="post-media">
+                        <img src="${post.imageUrl}" alt="Post image" class="post-image" onclick="openImageModal('${post.imageUrl}')">
+                    </div>` : ''
+                }
+                ${post.videoUrl ? `
+                    <div class="post-media">
+                        <video controls class="post-video">
+                            <source src="${post.videoUrl}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>` : ''
+                }
+                <div class="post-actions">
+                    <button class="like-btn" onclick="toggleLike('${post._id}')">
+                        <i class="far fa-heart"></i> ${post.likes?.length || 0}
+                    </button>
+                    <button class="comment-btn" onclick="toggleComments('${post._id}')">
+                        <i class="far fa-comment"></i> ${post.comments?.length || 0}
+                    </button>
+                </div>
+                <div class="post-comments" id="comments-${post._id}" style="display: none;">
+                    ${post.comments?.length ? `
+                        <div class="comments-list">
+                            ${post.comments.map(comment => `
+                                <div class="comment">
+                                    <div class="comment-user">
+                                        <span class="comment-username">${comment.user?.name || 'Anonymous'}:</span>
+                                        <span class="comment-text">${comment.text}</span>
+                                    </div>
+                                    <small class="comment-time">
+                                        ${new Date(comment.createdAt).toLocaleString('en-US', {
+                                            month: 'short',
+                                            day: 'numeric',
+                                            hour: '2-digit',
+                                            minute: '2-digit'
+                                        })}
+                                    </small>
+                                </div>
+                            `).join('')}
+                        </div>` : ''
+                    }
+                    <div class="add-comment">
+                        <input type="text" id="comment-${post._id}" placeholder="Add a comment..." 
+                               onkeypress="if(event.key === 'Enter') addComment('${post._id}')">
+                        <button class="btn btn-primary btn-sm" onclick="addComment('${post._id}')">Post</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    // Initialize any post-specific event listeners here if needed
+}
+
+// Function to handle post submission
+async function handlePostSubmit() {
+    // Check if user is logged in
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showNotification('Please log in to create a post', true);
+        // Optionally redirect to login
+        // window.location.href = '/login';
+        return;
+    }
+
+    const postContent = document.getElementById('post-content').value.trim();
+    const imageInput = document.getElementById('post-image-upload');
+    const videoInput = document.getElementById('post-video-upload');
+    const statusEl = document.getElementById('post-status');
+    
+    if (!postContent && !imageInput.files[0] && !videoInput.files[0]) {
+        showNotification('Please add some content, image, or video to your post.', true);
+        return;
+    }
+    
+    try {
+        // Create form data for file uploads
+        const formData = new FormData();
+        formData.append('content', postContent);
+        
+        // Add image if present
+        if (imageInput.files[0]) {
+            formData.append('media', imageInput.files[0]);
+            formData.append('mediaType', 'image');
+        }
+        
+        // Add video if present
+        if (videoInput.files[0]) {
+            formData.append('media', videoInput.files[0]);
+            formData.append('mediaType', 'video');
+        }
+        
+        // Show loading state
+        if (statusEl) {
+            statusEl.style.display = 'block';
+            statusEl.textContent = 'Posting...';
+        }
+        
+        // Make API call to create post
+        const response = await fetch('http://localhost:10000/api/posts', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+                // Don't set Content-Type header when using FormData
+                // The browser will set it automatically with the correct boundary
+            },
+            body: formData
+        });
+        
+        const responseData = await response.json();
+        
+        if (!response.ok) {
+            throw new Error(responseData.message || 'Failed to create post');
+        }
+        
+        // Reset form
+        document.getElementById('post-content').value = '';
+        imageInput.value = '';
+        videoInput.value = '';
+        document.getElementById('media-preview').style.display = 'none';
+        document.getElementById('image-preview-container').style.display = 'none';
+        document.getElementById('video-preview-container').style.display = 'none';
+        
+        // Show success message
+        if (statusEl) {
+            statusEl.textContent = responseData.status === 'approved' ? 
+                'Post published!' : 
+                'Your post has been submitted for admin approval.';
+            
+            setTimeout(() => {
+                statusEl.style.display = 'none';
+            }, 3000);
+        }
+        
+        // Refresh posts
+        await fetchPosts();
+        
+    } catch (error) {
+        console.error('Error creating post:', error);
+        showNotification(error.message || 'Failed to create post. Please try again.', true);
+        
+        if (statusEl) {
+            statusEl.style.display = 'none';
+        }
+    }
+}
+
+// Function to render pending approvals for admin
+function renderPendingApprovals() {
+    if (!gameData.currentUser?.isAdmin) return;
+    
+    const pendingContainer = document.getElementById('pending-approvals-container');
+    if (!pendingContainer) return;
+    
+    if (!gameData.pendingApprovals?.length) {
+        pendingContainer.innerHTML = '<p class="no-pending">No posts pending approval</p>';
+        return;
+    }
+    
+    pendingContainer.innerHTML = `
+        <h3>Posts Pending Approval (${gameData.pendingApprovals.length})</h3>
+        <div class="pending-posts">
+            ${gameData.pendingApprovals.map(post => `
+                <div class="pending-post">
+                    <div class="post-header">
+                        <div class="post-user">
+                            <div class="post-avatar">
+                                ${post.userImage ? 
+                                    `<img src="${post.userImage}" alt="${post.userName}">` : 
+                                    `<i class="fas fa-user"></i>`
+                                }
+                            </div>
+                            <span class="post-username">${post.userName}</span>
+                        </div>
+                        <span class="post-time">${new Date(post.timestamp).toLocaleString()}</span>
+                    </div>
+                    <div class="post-content">${post.content}</div>
+                    ${post.imageUrl ? `
+                        <div class="post-media">
+                            <img src="${post.imageUrl}" alt="Post image">
+                        </div>` : ''
+                    }
+                    ${post.videoUrl ? `
+                        <div class="post-media">
+                            <video controls>
+                                <source src="${post.videoUrl}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>` : ''
+                    }
+                    <div class="post-actions">
+                        <button class="btn btn-approve" onclick="approvePost('${post.id}')">
+                            <i class="fas fa-check"></i> Approve
+                        </button>
+                        <button class="btn btn-reject" onclick="rejectPost('${post.id}')">
+                            <i class="fas fa-times"></i> Reject
+                        </button>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+}
+
+// Function to initialize post functionality
+function initPosts() {
+    // Add click event for post submission
+    const submitPostBtn = document.getElementById('submit-post');
+    if (submitPostBtn) {
+        submitPostBtn.addEventListener('click', handlePostSubmit);
+    }
+    
+    // Add keyboard event for post submission (Enter key)
+    const postContent = document.getElementById('post-content');
+    if (postContent) {
+        postContent.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handlePostSubmit();
+            }
+        });
+    }
+    
+    // Initial render of posts
+    renderPosts();
+    
+    // If admin, render pending approvals
+    if (gameData.currentUser?.isAdmin) {
+        renderPendingApprovals();
+    }
+}
+
+// Function to add a comment to a post
+async function addComment(postId) {
+    const commentInput = document.getElementById(`comment-${postId}`);
+    if (!commentInput) return;
+    
+    const commentText = commentInput.value.trim();
+    if (!commentText) return;
+    
+    try {
+        const response = await fetch(`/api/posts/${postId}/comments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            },
+            body: JSON.stringify({ text: commentText })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to add comment');
+        }
+        
+        const updatedPost = await response.json();
+        
+        // Update the post in the local state
+        const postIndex = gameData.posts.findIndex(p => p._id === postId);
+        if (postIndex !== -1) {
+            gameData.posts[postIndex] = updatedPost;
+            renderPosts();
+            
+            // Keep comments open after adding
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            if (commentsSection) {
+                commentsSection.style.display = 'block';
+            }
+        }
+        
+        // Clear the input
+        commentInput.value = '';
+    } catch (error) {
+        console.error('Error adding comment:', error);
+        showNotification('Failed to add comment', true);
+    }
+}
+
+// Make addComment available globally
+window.addComment = addComment;
+
+// Function to toggle like on a post
+async function toggleLike(postId) {
+    try {
+        const response = await fetch(`/api/posts/${postId}/like`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to like post');
+        }
+        
+        const updatedPost = await response.json();
+        
+        // Update the post in the local state
+        const postIndex = gameData.posts.findIndex(p => p._id === postId);
+        if (postIndex !== -1) {
+            gameData.posts[postIndex] = updatedPost;
+            renderPosts();
+        }
+    } catch (error) {
+        console.error('Error toggling like:', error);
+        showNotification('Failed to like post', true);
+    }
+}
+
+// Function to delete a post
+async function deletePost(postId) {
+    if (!confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
+        return;
+    }
+    
+    try {
+        const response = await fetch(`/api/posts/${postId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to delete post');
+        }
+        
+        // Remove the post from the local state
+        gameData.posts = gameData.posts.filter(p => p._id !== postId);
+        renderPosts();
+        showNotification('Post deleted successfully');
+    } catch (error) {
+        console.error('Error deleting post:', error);
+        showNotification('Failed to delete post', true);
+    }
+}
+
+// Make toggleLike available globally
+window.toggleLike = toggleLike;
+
+// Function to toggle comments section
+function toggleComments(postId) {
+    const commentsSection = document.getElementById(`comments-${postId}`);
+    if (commentsSection) {
+        commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+    }
+}
+
+// Make toggleComments available globally
+window.toggleComments = toggleComments;
+
 // Initialize the app when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     ensureGameDataStructures();
     init();
-    initAdminSearch();
+    initMediaUploads(); // Initialize media upload functionality
+    initPosts(); // Initialize post functionality
+    checkSuspensions(); // Check for expired suspensions on page load
+    fetchPosts(); // Load posts from server
+    
+    // Add event listener for post submission
+    const postForm = document.getElementById('post-form');
+    if (postForm) {
+        postForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            handlePostSubmit();
+        });
+    }
+
+    // Add click handler for post button (for backward compatibility)
+    const postButton = document.getElementById('submit-post');
+    if (postButton) {
+        postButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            handlePostSubmit();
+        });
+    }
+    
+    // Check if we're coming back from a page refresh with an active user
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+        const user = JSON.parse(savedUser);
+        const player = findPlayerById(user.id);
+        if (player) {
+            loginUser(player);
+            // Render admin interface if user is admin
+            if (player.isAdmin) {
+                renderPendingApprovals();
+            }
+        }
+    }
     renderPendingPosts();
     renderApprovedPosts();
     
-    // Add event listener for tab switching
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const tabId = e.target.getAttribute('data-tab');
-            // Update active tab
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
+    // Initialize tab switching for admin panel
+    document.querySelectorAll('.admin-bottom-nav .tab-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const tabId = this.getAttribute('data-tab');
             
-            // Show the selected tab content
+            // Remove active class from all tab buttons and content
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active');
+                b.style.color = '#666';
+            });
+            
+            // Hide all tab content
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.style.display = 'none';
             });
-            document.getElementById(tabId).style.display = 'block';
             
-            // Update the content if needed
-            if (tabId === 'posts-tab') {
+            // Activate clicked tab
+            this.classList.add('active');
+            this.style.color = '#4a6cf7';
+            
+            // Show corresponding content
+            const activeContent = document.getElementById(tabId);
+            if (activeContent) {
+                activeContent.style.display = 'block';
+            }
+            
+            // Update content based on tab
+            if (tabId === 'players-tab') {
+                renderPlayersList();
+            } else if (tabId === 'posts-tab') {
                 renderPendingPosts();
                 renderApprovedPosts();
-            } else if (tabId === 'players-tab') {
-                renderPlayersList();
+            } else if (tabId === 'stats-tab') {
+                updateAdminStats();
             }
         });
     });
+    
+    // Set initial active tab
+    const initialTab = document.querySelector('.admin-bottom-nav .tab-btn[data-tab="players-tab"]');
+    if (initialTab) {
+        initialTab.click();
+    }
 });
 
 // Show targets view
@@ -1153,7 +1720,35 @@ function loginUser(user) {
         }
     }
     
-    // Save to localStorage - only store essential data
+    // Create a JWT-like token
+    // Note: In a real app, this would be generated by the server
+    const header = {
+        alg: 'HS256',
+        typ: 'JWT'
+    };
+    
+    const payload = {
+        id: user._id,
+        name: user.name,
+        isAdmin: user.isAdmin,
+        iat: Math.floor(Date.now() / 1000),
+        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 7) // 1 week expiration
+    };
+    
+    // Encode header and payload
+    const encodedHeader = btoa(JSON.stringify(header));
+    const encodedPayload = btoa(JSON.stringify(payload));
+    
+    // Create a signature (in a real app, this would use a secret key)
+    const signature = btoa(JSON.stringify({
+        ...header,
+        ...payload,
+        secret: 'your_jwt_secret_here' // This should match JWT_SECRET in your .env file
+    }));
+    
+    const token = `${encodedHeader}.${encodedPayload}.${signature}`;
+    
+    // Save to localStorage
     const userData = {
         _id: user._id,
         name: user.name,
@@ -1161,6 +1756,7 @@ function loginUser(user) {
         status: user.status
     };
     localStorage.setItem('currentUser', JSON.stringify(userData));
+    localStorage.setItem('token', token);
     
     // Set current user in game data
     gameData.currentUser = user;
@@ -1274,6 +1870,7 @@ function toggleAdminPanel() {
         // Refresh data when opening the panel
         updateAdminStats();
         renderPlayersList();
+        initAdminSearch(); // Initialize search functionality
     }
 }
 
@@ -1287,19 +1884,71 @@ function handleOutsideClick(e) {
     }
 }
 
+// Render elimination history in the admin panel
+function renderEliminationHistory() {
+    const eliminationsList = document.getElementById('eliminations-list');
+    if (!eliminationsList) return;
+    
+    // Get all eliminated players with their killers
+    const eliminatedPlayers = gameData.players.filter(player => 
+        player.status === 'eliminated' && player.eliminatedAt && player.eliminatedBy
+    );
+    
+    // Sort by elimination time (newest first)
+    eliminatedPlayers.sort((a, b) => new Date(b.eliminatedAt) - new Date(a.eliminatedAt));
+    
+    if (eliminatedPlayers.length === 0) {
+        eliminationsList.innerHTML = `
+            <div class="empty-state" style="padding: 30px; text-align: center; color: #999;">
+                <i class="fas fa-trophy" style="font-size: 24px; margin-bottom: 10px; display: block;"></i>
+                <p>No eliminations yet</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Create list of eliminations
+    eliminationsList.innerHTML = eliminatedPlayers.map(player => {
+        const killer = gameData.players.find(p => p._id === player.eliminatedBy);
+        const eliminationTime = new Date(player.eliminatedAt);
+        const formattedTime = formatTimeAgo(eliminationTime);
+        
+        return `
+            <div class="elimination-item">
+                <div class="elimination-icon">
+                    <i class="fas fa-skull"></i>
+                </div>
+                <div class="elimination-details">
+                    <div class="elimination-text">
+                        <strong>${player.name}</strong> was eliminated by <strong>${killer ? killer.name : 'Unknown'}</strong>
+                        <span class="elimination-badge">Eliminated</span>
+                    </div>
+                    <div class="elimination-time">
+                        <i class="far fa-clock"></i> ${formattedTime}
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
 // Update admin statistics
 function updateAdminStats() {
     if (!document.getElementById('total-players')) return;
     
     const now = new Date();
     const totalPlayers = gameData.players.length;
+    let suspensionCleared = false;
     
-    // Clear any expired suspensions
+    // Clear any expired suspensions and update status
     gameData.players.forEach(player => {
-        if (player.suspendedUntil && new Date(player.suspendedUntil) <= now) {
-            player.suspendedUntil = null;
-            if (player.status === 'suspended') {
-                player.status = 'active';
+        if (player.suspendedUntil) {
+            if (new Date(player.suspendedUntil) <= now) {
+                player.suspendedUntil = null;
+                if (player.status === 'suspended') {
+                    player.status = 'active';
+                    suspensionCleared = true;
+                }
             }
         }
     });
@@ -1308,31 +1957,28 @@ function updateAdminStats() {
     let activeCount = 0;
     let eliminatedCount = 0;
     let suspendedCount = 0;
-
+    let totalKills = 0;
+    
     gameData.players.forEach(player => {
-        const isSuspended = player.status === 'suspended' || 
-                          (player.suspendedUntil && new Date(player.suspendedUntil) > now);
-
-        if (player.status === 'eliminated') {
-            eliminatedCount++;
-        } else if (isSuspended) {
-            suspendedCount++;
-        } else {
-            activeCount++;
+        if (player.status === 'active') activeCount++;
+        else if (player.status === 'eliminated') eliminatedCount++;
+        else if (player.status === 'suspended') suspendedCount++;
+        
+        // Count total kills
+        if (player.eliminations) {
+            totalKills += player.eliminations;
         }
     });
     
-    const totalKills = gameData.players.reduce((sum, player) => sum + (player.eliminations || 0), 0);
-    
-    // Update the stats display
+    // Update the UI
     document.getElementById('total-players').textContent = totalPlayers;
     document.getElementById('active-players-count').textContent = activeCount;
     document.getElementById('eliminated-players-count').textContent = eliminatedCount;
     
-    // Add or update suspended players count
-    let suspendedCountEl = document.getElementById('suspended-players');
+    // Update suspended players count with a check for the element
+    const suspendedCountEl = document.getElementById('suspended-players');
     if (!suspendedCountEl) {
-        // Add the suspended count stat if it doesn't exist
+        // If the element doesn't exist, create and insert it
         const statsContainer = document.querySelector('.admin-stats');
         if (statsContainer) {
             statsContainer.innerHTML += `
@@ -1355,6 +2001,77 @@ function updateAdminStats() {
     if (endDateEl) {
         endDateEl.textContent = `Ends in ${daysLeft} days (July 4th, 2025)`;
     }
+    
+    // Update all the stats sections
+    updateStatsSections();
+    
+    // Save if any suspensions were cleared
+    if (suspensionCleared) {
+        saveToLocalStorage();
+    }
+}
+
+// Update all stats sections
+function updateStatsSections() {
+    // Update elimination history
+    renderEliminationHistory();
+    
+    // Update suspended players list
+    renderSuspendedPlayers();
+}
+
+// Render suspended players list
+function renderSuspendedPlayers() {
+    const suspendedList = document.getElementById('suspended-players-list');
+    if (!suspendedList) return;
+    
+    // Get all suspended players
+    const suspendedPlayers = gameData.players.filter(player => 
+        player.status === 'suspended' && player.suspendedUntil
+    );
+    
+    // Sort by suspension end time (soonest first)
+    suspendedPlayers.sort((a, b) => new Date(a.suspendedUntil) - new Date(b.suspendedUntil));
+    
+    if (suspendedPlayers.length === 0) {
+        suspendedList.innerHTML = `
+            <div class="empty-state" style="padding: 20px; text-align: center; color: #999;">
+                <i class="fas fa-user-check" style="font-size: 24px; margin-bottom: 10px; display: block;"></i>
+                <p>No players are currently suspended</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Create list of suspended players
+    suspendedList.innerHTML = suspendedPlayers.map(player => {
+        const suspendEnd = new Date(player.suspendedUntil);
+        const timeRemaining = formatTimeRemaining(player.suspendedUntil);
+        const suspendDate = suspendEnd.toLocaleDateString();
+        const suspendTime = suspendEnd.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        return `
+            <div class="suspended-item">
+                <div class="suspended-icon">
+                    <i class="fas fa-user-clock"></i>
+                </div>
+                <div class="suspended-details">
+                    <div class="suspended-text">
+                        <strong>${player.name}</strong>
+                        <span class="suspended-badge">Suspended</span>
+                    </div>
+                    <div class="suspended-time">
+                        <span><i class="far fa-clock"></i> ${timeRemaining} remaining</span>
+                        <span class="suspended-until">Until: ${suspendDate} at ${suspendTime}</span>
+                    </div>
+                </div>
+                <button class="btn btn-sm btn-outline-primary" 
+                        onclick="unsuspendPlayer('${player._id}')">
+                    Reinstate
+                </button>
+            </div>
+        `;
+    }).join('');
 }
 
 // Show player details
@@ -1580,9 +2297,44 @@ function closePlayerModal() {
 function initAdminSearch() {
     const searchInput = document.getElementById('admin-search');
     if (searchInput) {
+        // Add debounce function to prevent excessive re-renders
+        const debounce = (func, delay) => {
+            let timeoutId;
+            return function(...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    func.apply(this, args);
+                }, delay);
+            };
+        };
+
+        // Handle search input with debounce
+        const handleSearch = debounce((value) => {
+            renderPlayersList(value);
+        }, 100);
+
+        // Add input event for real-time search
         searchInput.addEventListener('input', (e) => {
-            renderPlayersList(e.target.value);
+            handleSearch(e.target.value);
         });
+
+        // Add search icon click handler
+        const searchIcon = searchInput.nextElementSibling;
+        if (searchIcon && searchIcon.classList.contains('search-icon')) {
+            searchIcon.addEventListener('click', () => {
+                handleSearch(searchInput.value);
+            });
+        }
+
+        // Add Enter key support
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSearch(searchInput.value);
+            }
+        });
+
+        // Initial render with empty search
+        handleSearch('');
     }
     
     // Close modal when clicking the X
@@ -1597,17 +2349,32 @@ function switchTab(e) {
     const tabId = e.target.dataset.tab;
     
     // Update active tab button
-    tabBtns.forEach(btn => btn.classList.remove('active'));
+    tabBtns.forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.color = '#666';
+    });
     e.target.classList.add('active');
+    e.target.style.color = '#4a6cf7';
     
     // Show corresponding tab content
     tabContents.forEach(content => {
-        if (content.id === `${tabId}-tab`) {
-            content.style.display = 'block';
-        } else {
-            content.style.display = 'none';
-        }
+        content.style.display = 'none';
     });
+    
+    const activeContent = document.getElementById(tabId);
+    if (activeContent) {
+        activeContent.style.display = 'block';
+    }
+    
+    // Update content based on the selected tab
+    if (tabId === 'players-tab') {
+        renderPlayersList();
+    } else if (tabId === 'posts-tab') {
+        renderPendingPosts();
+        renderApprovedPosts();
+    } else if (tabId === 'stats-tab') {
+        updateAdminStats();
+    }
 }
 
 // Update game statistics
@@ -2067,11 +2834,23 @@ function unsuspendPlayer(playerId) {
     player.status = 'active';
     delete player.suspendedUntil;
     
-    // Update UI
+    // Update UI and refresh admin stats
     updateGameStats();
     updateAdminStats();
     renderPlayersList();
     updateLeaderboard();
+    
+    // Force update the stats tab if it's active
+    const statsTab = document.getElementById('stats-tab');
+    if (statsTab && statsTab.style.display === 'block') {
+        // Re-render the stats tab content
+        document.getElementById('total-players').textContent = gameData.players.length;
+        const suspendedCount = gameData.players.filter(p => p.status === 'suspended').length;
+        document.getElementById('suspended-players').textContent = suspendedCount;
+        
+        // Re-render the suspended players list
+        renderSuspendedPlayers();
+    }
     
     // Save changes
     saveToLocalStorage();
@@ -2115,11 +2894,23 @@ function applySuspension(playerId, days) {
             modal.classList.remove('active');
         }
         
-        // Update UI
+        // Update UI and refresh admin stats
         updateGameStats();
         updateAdminStats();
         renderPlayersList();
         updateLeaderboard();
+        
+        // Force update the stats tab if it's active
+        const statsTab = document.getElementById('stats-tab');
+        if (statsTab && statsTab.style.display === 'block') {
+            // Re-render the stats tab content
+            document.getElementById('total-players').textContent = gameData.players.length;
+            const suspendedCount = gameData.players.filter(p => p.status === 'suspended').length;
+            document.getElementById('suspended-players').textContent = suspendedCount;
+            
+            // Re-render the suspended players list
+            renderSuspendedPlayers();
+        }
         
         // Format duration text for notification
         let durationText = '';
@@ -2258,6 +3049,72 @@ function removePlayer(playerId) {
 window.revivePlayer = revivePlayer;
 window.removePlayer = removePlayer;
 
+// Media upload and preview functionality
+function initMediaUploads() {
+    const imageUpload = document.getElementById('post-image-upload');
+    const videoUpload = document.getElementById('post-video-upload');
+    const mediaPreview = document.getElementById('media-preview');
+
+    if (imageUpload) {
+        imageUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const imgPreview = document.getElementById('post-image-preview');
+                    const container = document.getElementById('image-preview-container');
+                    imgPreview.src = event.target.result;
+                    container.style.display = 'block';
+                    mediaPreview.style.display = 'block';
+                    // Hide video preview if it's showing
+                    document.getElementById('video-preview-container').style.display = 'none';
+                    // Reset video input
+                    videoUpload.value = '';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    if (videoUpload) {
+        videoUpload.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const videoPreview = document.getElementById('post-video-preview');
+                const container = document.getElementById('video-preview-container');
+                videoPreview.src = URL.createObjectURL(file);
+                container.style.display = 'block';
+                mediaPreview.style.display = 'block';
+                // Hide image preview if it's showing
+                document.getElementById('image-preview-container').style.display = 'none';
+                // Reset image input
+                imageUpload.value = '';
+            }
+        });
+    }
+}
+
+// Function to remove media preview
+function removeMedia(type) {
+    const mediaPreview = document.getElementById('media-preview');
+    if (type === 'image') {
+        document.getElementById('image-preview-container').style.display = 'none';
+        document.getElementById('post-image-upload').value = '';
+    } else if (type === 'video') {
+        document.getElementById('video-preview-container').style.display = 'none';
+        document.getElementById('post-video-upload').value = '';
+    }
+    
+    // Hide media preview container if no media is left
+    if (document.getElementById('image-preview-container').style.display === 'none' && 
+        document.getElementById('video-preview-container').style.display === 'none') {
+        mediaPreview.style.display = 'none';
+    }
+}
+
+// Make removeMedia function available globally
+window.removeMedia = removeMedia;
+
 // Eliminate a player (admin function)
 function eliminatePlayer(playerId, eliminatedById = null) {
     const player = gameData.players.find(p => p._id === playerId);
@@ -2266,8 +3123,10 @@ function eliminatePlayer(playerId, eliminatedById = null) {
     // Store the old target before making any changes
     const oldTargetId = player.target;
     
-    // Mark player as eliminated
+    // Mark player as eliminated and record timestamp and eliminator
     player.status = 'eliminated';
+    player.eliminatedAt = new Date().toISOString();
+    player.eliminatedBy = eliminatedById || (gameData.players.find(p => p.target === playerId) || {})._id;
     
     // Find the player's hunter (the one who eliminated them)
     const hunter = eliminatedById ? 
@@ -2279,8 +3138,13 @@ function eliminatePlayer(playerId, eliminatedById = null) {
         if (playerId) {
             // Initialize previousTargets array if it doesn't exist
             hunter.previousTargets = hunter.previousTargets || [];
-            // Add the eliminated player to hunter's previous targets
-            hunter.previousTargets.push(playerId);
+            // Add the eliminated player to hunter's previous targets with timestamp
+            hunter.previousTargets = hunter.previousTargets || [];
+            hunter.previousTargets.push({
+                targetId: playerId,
+                timestamp: new Date().toISOString(),
+                status: 'eliminated'
+            });
         }
         
         // Give the hunter their target's target (target inheritance)
@@ -2379,6 +3243,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const rulesModal = document.getElementById('rules-modal');
     const closeRulesBtn = document.getElementById('close-rules-modal');
     
+    // Set up prizes modal
+    const prizesBtn = document.getElementById('prizes-btn');
+    const prizesModal = document.getElementById('prizes-modal');
+    const closePrizesBtn = document.getElementById('close-prizes-modal');
+    
     // Set up credits modal
     const creditsBtn = document.getElementById('credits-btn');
     const creditsModal = document.getElementById('credits-modal');
@@ -2389,31 +3258,57 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeImageModal = document.getElementById('close-image-modal');
     const enlargedImg = document.getElementById('enlarged-img');
     
+    // Function to open modal
+    function openModal(modal) {
+        if (!modal) return;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+    }
+    
+    // Function to close modal
+    function closeModal(modal) {
+        if (!modal) return;
+        modal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        document.documentElement.style.overflow = 'auto';
+    }
+    
     // Function to open image modal
     function openImageModal(imgSrc) {
         enlargedImg.src = imgSrc;
-        imageModal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
+        openModal(imageModal);
     }
     
     // Function to close image modal
     function closeImageModalFunc() {
-        imageModal.style.display = 'none';
-        document.body.style.overflow = 'auto';
+        closeModal(imageModal);
     }
 
     if (rulesBtn && rulesModal) {
         rulesBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            rulesModal.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            openModal(rulesModal);
         });
     }
     
     if (closeRulesBtn) {
         closeRulesBtn.addEventListener('click', () => {
-            rulesModal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
+            closeModal(rulesModal);
+        });
+    }
+    
+    // Set up prizes modal
+    if (prizesBtn && prizesModal) {
+        prizesBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(prizesModal);
+        });
+    }
+    
+    if (closePrizesBtn) {
+        closePrizesBtn.addEventListener('click', () => {
+            closeModal(prizesModal);
         });
     }
     
@@ -2421,31 +3316,42 @@ document.addEventListener('DOMContentLoaded', () => {
     if (creditsBtn && creditsModal) {
         creditsBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            creditsModal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
+            openModal(creditsModal);
         });
     }
     
     if (closeCreditsBtn) {
         closeCreditsBtn.addEventListener('click', () => {
-            creditsModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+            closeModal(creditsModal);
         });
     }
     
     // Close modals when clicking outside of them
     window.addEventListener('click', (e) => {
         if (e.target === rulesModal) {
-            rulesModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        } else if (e.target === creditsModal) {
-            creditsModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        } else if (e.target === imageModal) {
+            closeModal(rulesModal);
+        }
+        if (e.target === prizesModal) {
+            closeModal(prizesModal);
+        }
+        if (e.target === creditsModal) {
+            closeModal(creditsModal);
+        }
+        if (e.target === imageModal) {
             closeImageModalFunc();
         }
     });
     
+    // Close modals with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            const activeModal = document.querySelector('.modal.active');
+            if (activeModal) {
+                closeModal(activeModal);
+            }
+        }
+    });
+        
     // Close image modal when clicking the close button
     if (closeImageModal) {
         closeImageModal.addEventListener('click', closeImageModalFunc);

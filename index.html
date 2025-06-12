@@ -6,6 +6,8 @@
     <title>Senior Assassin Network</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin-bottom-nav.css">
+    <link rel="stylesheet" href="eliminations-styles.css">
 </head>
 <body>
     <!-- Login Screen -->
@@ -147,17 +149,13 @@
                             <i class="fas fa-book"></i>
                             <span>Rules</span>
                         </a>
+                        <a href="#" id="prizes-btn" class="nav-link">
+                            <i class="fas fa-trophy"></i>
+                            <span>Prizes</span>
+                        </a>
                         <a href="#" id="credits-btn" class="nav-link">
                             <i class="fas fa-star"></i>
                             <span>Credits</span>
-                        </a>
-                        <a href="#" id="network-btn" class="nav-link">
-                            <i class="fas fa-project-diagram"></i>
-                            <span>Network</span>
-                        </a>
-                        <a href="#" id="settings-btn" class="nav-link">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
                         </a>
                     </nav>
                 </aside>
@@ -186,9 +184,15 @@
                             </div>
                             <button id="submit-post" class="btn btn-post">Post</button>
                         </div>
-                        <div id="post-preview" class="post-preview" style="display: none; margin-top: 15px;">
-                            <img id="post-image-preview" src="#" alt="Preview" style="max-width: 100%; border-radius: 8px; display: none;">
-                            <video id="post-video-preview" controls style="max-width: 100%; border-radius: 8px; display: none; margin-top: 10px;"></video>
+                        <div id="media-preview" class="media-preview" style="display: none; margin-top: 15px;">
+                            <div class="media-item" id="image-preview-container" style="display: none;">
+                                <img id="post-image-preview" src="#" alt="Preview" style="max-width: 100%; border-radius: 8px; max-height: 300px; object-fit: contain;">
+                                <button class="remove-media" onclick="removeMedia('image')" style="position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer;">×</button>
+                            </div>
+                            <div class="media-item" id="video-preview-container" style="display: none; position: relative;">
+                                <video id="post-video-preview" controls style="max-width: 100%; border-radius: 8px; max-height: 300px; background: #000;"></video>
+                                <button class="remove-media" onclick="removeMedia('video')" style="position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer;">×</button>
+                            </div>
                         </div>
                         <div id="post-status" class="post-status" style="display: none; margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 8px; text-align: center;">
                             Your post has been submitted!
@@ -272,10 +276,6 @@
         <div class="admin-header">
             <h2>Admin Panel</h2>
             <div class="admin-controls">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input type="text" id="admin-search" placeholder="Search players...">
-                </div>
                 <button id="close-admin-panel" class="btn-close">
                     <i class="fas fa-times"></i>
                 </button>
@@ -305,62 +305,101 @@
                     <div class="stat-label">Total Eliminations</div>
                 </div>
             </div>
-
-            <div class="admin-tabs">
-                <button class="tab-btn active" data-tab="players-tab">Players</button>
-                <button class="tab-btn" data-tab="posts-tab">Post Approvals</button>
-                <button class="tab-btn" data-tab="stats-tab">Game Stats</button>
-            </div>
-
-            <div class="tab-content active" id="players-tab">
-                <div class="players-table-container">
-                    <div class="table-header">
-                        <div class="header-col name-col">Player</div>
-                        <div class="header-col status-col">Status</div>
-                        <div class="header-col kills-col">Eliminations</div>
-                        <div class="header-col target-col">Target</div>
-                        <div class="header-col actions-col">Actions</div>
-                    </div>
-                    <div class="search-container">
-                        <input type="text" id="admin-search" placeholder="Search players..." class="search-input">
-                        <i class="fas fa-search search-icon"></i>
-                    </div>
-                    <div class="players-list" id="players-list">
-                        <!-- Players will be listed here -->
-                    </div>
-                </div>
-            </div>
             
-            <!-- Posts Approval Tab -->
-            <div class="tab-content" id="posts-tab">
-                <div class="posts-approval-container">
-                    <div class="pending-section">
-                        <h3>Pending Post Approvals</h3>
-                        <div class="pending-posts-list" id="pending-posts-list">
-                            <div class="empty-state">
-                                <i class="fas fa-check-circle"></i>
-                                <p>No pending posts to approve</p>
-                            </div>
+            <div class="admin-content-wrapper" style="flex-grow: 1; display: flex; flex-direction: column; overflow: hidden; padding-bottom: 70px;">
+                <!-- Players Tab -->
+                <div class="tab-content active" id="players-tab" style="flex-grow: 1; overflow-y: auto;">
+                    <div class="players-table-container">
+                        <div class="table-header">
+                            <div class="header-col name-col">Player</div>
+                            <div class="header-col status-col">Status</div>
+                            <div class="header-col kills-col">Eliminations</div>
+                            <div class="header-col target-col">Target</div>
+                            <div class="header-col actions-col">Actions</div>
+                        </div>
+                        <div class="search-container">
+                            <input type="text" id="admin-search" placeholder="Search players..." class="search-input">
+                            <i class="fas fa-search search-icon"></i>
+                        </div>
+                        <div class="players-list" id="players-list">
+                            <!-- Players will be listed here -->
                         </div>
                     </div>
-                    
-                    <div class="approved-section">
-                        <h3>Recently Approved Posts</h3>
-                        <div class="approved-posts-list" id="approved-posts-list">
-                            <div class="empty-state">
-                                <i class="fas fa-check-circle"></i>
-                                <p>No recently approved posts</p>
+                </div>
+                
+                <!-- Posts Approval Tab -->
+                <div class="tab-content" id="posts-tab" style="display: none;">
+                    <div class="posts-approval-container">
+                        <div class="pending-section">
+                            <h3>Pending Post Approvals</h3>
+                            <div class="pending-posts-list" id="pending-posts-list">
+                                <div class="empty-state">
+                                    <i class="fas fa-check-circle"></i>
+                                    <p>No pending posts to approve</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="approved-section">
+                            <h3>Recently Approved Posts</h3>
+                            <div class="approved-posts-list" id="approved-posts-list">
+                                <div class="empty-state">
+                                    <i class="fas fa-check-circle"></i>
+                                    <p>No recently approved posts</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Stats Tab -->
+                <div class="tab-content" id="stats-tab" style="display: none; padding: 20px;">
+                    <div class="stats-container">
+                        <h3>Game Statistics</h3>
+                        <div class="stats-grid">
+                            <!-- Stats will be populated by JavaScript -->
+                        </div>
+                        
+                        <div class="suspended-players" style="margin-top: 30px;">
+                            <h3>Suspended Players</h3>
+                            <div class="suspended-list" id="suspended-players-list" style="background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; margin-bottom: 30px;">
+                                <!-- Suspended players will be populated by JavaScript -->
+                                <div class="empty-state" style="padding: 30px; text-align: center; color: #999;">
+                                    <i class="fas fa-user-check" style="font-size: 24px; margin-bottom: 10px; display: block;"></i>
+                                    <p>No players are currently suspended</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="eliminations-history" style="margin-top: 30px;">
+                            <h3>Elimination History</h3>
+                            <div class="eliminations-list" id="eliminations-list" style="background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden;">
+                                <!-- Eliminations will be populated by JavaScript -->
+                                <div class="empty-state" style="padding: 30px; text-align: center; color: #999;">
+                                    <i class="fas fa-trophy" style="font-size: 24px; margin-bottom: 10px; display: block;"></i>
+                                    <p>No eliminations yet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bottom Navigation Tabs -->
+                <div class="admin-bottom-nav" style="position: fixed; bottom: 0; left: 0; right: 0; background: #fff; display: flex; justify-content: space-around; padding: 10px 0; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000;">
+                    <button class="tab-btn active" data-tab="players-tab" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 8px 15px; cursor: pointer; color: #4a6cf7; font-size: 12px; border-radius: 4px; transition: all 0.2s;">
+                        <i class="fas fa-users" style="font-size: 18px; margin-bottom: 4px;"></i>
+                        <span>Players</span>
+                    </button>
+                    <button class="tab-btn" data-tab="posts-tab" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 8px 15px; cursor: pointer; color: #666; font-size: 12px; border-radius: 4px; transition: all 0.2s;">
+                        <i class="fas fa-check-double" style="font-size: 18px; margin-bottom: 4px;"></i>
+                        <span>Posts</span>
+                    </button>
+                    <button class="tab-btn" data-tab="stats-tab" style="display: flex; flex-direction: column; align-items: center; background: none; border: none; padding: 8px 15px; cursor: pointer; color: #666; font-size: 12px; border-radius: 4px; transition: all 0.2s;">
+                        <i class="fas fa-chart-bar" style="font-size: 18px; margin-bottom: 4px;"></i>
+                        <span>Stats</span>
+                    </button>
+                </div>
             </div>
-        </div>
-
-        <div class="admin-tabs">
-            <button class="tab-btn active" data-tab="players-tab">Players</button>
-            <button class="tab-btn" data-tab="posts-tab">Post Approvals</button>
-            <button class="tab-btn" data-tab="stats-tab">Game Stats</button>
         </div>
     </div>
 
@@ -529,6 +568,17 @@
                         Save Changes
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prizes Modal -->
+    <div id="prizes-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-prizes-modal">&times;</span>
+            <h2>Prizes</h2>
+            <div class="prizes-content">
+                <img src="Prizes.jpg" alt="Prizes" style="max-width: 100%; height: auto; border-radius: 8px;">
             </div>
         </div>
     </div>

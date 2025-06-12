@@ -2,12 +2,14 @@
 :root {
     --sidebar-width: 250px;
     --header-height: 60px;
-    --tap-target-min: 44px; /* Minimum touch target size */
+    --tap-target-min: 48px; /* Increased for better touch targets */
     --mobile-padding: 16px;
     --transition-speed: 0.3s;
     --z-index-sidebar: 1000;
     --z-index-header: 100;
     --z-index-mobile-menu: 1001;
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
 }
 
 * {
@@ -483,9 +485,191 @@ header {
 }
 
 /* Responsive Adjustments */
+/* Mobile-First Responsive Styles */
 @media (max-width: 768px) {
+    :root {
+        --sidebar-width: 100%;
+        --header-height: 56px;
+    }
+    
+    body {
+        padding-bottom: calc(60px + var(--safe-area-inset-bottom)); /* Space for bottom nav */
+    }
+    
     .container {
-        padding: 0 10px;
+        padding: 0 12px;
+        padding-bottom: 20px; /* Extra space at bottom */
+    }
+    
+    /* Navigation Menu */
+    .nav-menu {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        display: flex;
+        justify-content: space-around;
+        padding: 8px 0 calc(8px + var(--safe-area-inset-bottom)) 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        height: auto;
+        max-height: 80px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .nav-link {
+        flex-direction: column;
+        padding: 8px 6px;
+        min-width: 60px;
+        font-size: 0.7rem;
+        text-align: center;
+        border-radius: 8px;
+        margin: 0 2px;
+    }
+    
+    .nav-link i {
+        margin: 0 0 4px 0;
+        font-size: 1.2rem;
+    }
+    
+    .nav-link span {
+        font-size: 0.7rem;
+        line-height: 1.2;
+    }
+    
+    /* Adjust main content padding */
+    .main-content {
+        padding-bottom: 80px; /* Space for bottom nav */
+    }
+    
+    /* Modal adjustments */
+    .modal {
+        padding: 0;
+        margin: 0;
+        align-items: flex-end;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .modal.active {
+        display: flex;
+    }
+    
+    .modal-content {
+        width: 100%;
+        max-width: 100%;
+        margin: auto 0 0 0;
+        border-radius: 20px 20px 0 0;
+        max-height: 90vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        background: white;
+        position: relative;
+        padding: 24px 20px;
+        transform: translateY(100%);
+        animation: slideUp 0.3s ease-out forwards;
+    }
+    
+    @keyframes slideUp {
+        to {
+            transform: translateY(0);
+        }
+    }
+    
+    /* For larger screens */
+    @media (min-width: 768px) {
+        .modal {
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 16px;
+            margin: 20px;
+            transform: scale(0.9);
+            animation: scaleIn 0.3s ease-out forwards;
+        }
+        
+        @keyframes scaleIn {
+            to {
+                transform: scale(1);
+            }
+        }
+        
+        .prizes-content img {
+            max-height: 75vh;
+        }
+    }
+    
+    /* Ensure buttons are tappable */
+    button, .btn, [role="button"] {
+        min-height: var(--tap-target-min);
+        padding: 12px 16px;
+    }
+    
+    /* Adjust form elements */
+    input, select, textarea {
+        font-size: 16px; /* Prevent zoom on focus in iOS */
+        min-height: var(--tap-target-min);
+    }
+    
+        /* Prizes modal specific */
+    .prizes-content {
+        padding: 16px 0;
+        text-align: center;
+    }
+    
+    .prizes-content img {
+        max-width: 100%;
+        height: auto;
+        max-height: 70vh;
+        display: block;
+        margin: 0 auto;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Modal header */
+    .modal h2 {
+        margin-top: 0;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #eee;
+        position: sticky;
+        top: 0;
+        background: white;
+        z-index: 1;
+        padding-top: 16px;
+    }
+    
+    /* Close button */
+    .close-modal {
+        position: absolute;
+        top: 16px;
+        right: 20px;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #666;
+        z-index: 2;
+    }
+    
+    /* Hide scrollbar for webkit browsers */
+    ::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
     }
     
     .sidebar {
@@ -1011,7 +1195,31 @@ header {
 #suspended-stat { grid-area: suspended-stat; }
 #days-left-stat { grid-area: days-left-stat; }
 
-/* Responsive adjustments */
+/* Tablet and Desktop adjustments */
+@media (min-width: 769px) {
+    /* Ensure desktop navigation is properly displayed */
+    .nav-menu {
+        position: static;
+        flex-direction: column;
+        padding: 0;
+        box-shadow: none;
+        height: auto;
+    }
+    
+    .nav-link {
+        flex-direction: row;
+        padding: 12px 15px;
+        min-width: auto;
+        text-align: left;
+        margin: 0;
+    }
+    
+    .nav-link i {
+        margin: 0 10px 0 0;
+    }
+}
+
+/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .stat-item {
         padding: 12px 8px;
@@ -2543,6 +2751,44 @@ button {
     border-color: #1976d2;
     outline: none;
     box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.1);
+}
+
+/* Search Container */
+.search-container {
+    position: relative;
+    margin: 15px 0;
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.search-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.search-icon:hover {
+    color: var(--primary);
 }
 
 /* Modal Footer Buttons */
