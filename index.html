@@ -10,18 +10,56 @@
     <link rel="stylesheet" href="eliminations-styles.css">
 </head>
 <body>
+    <!-- Main Menu Panel (initially hidden) -->
+    <div id="main-menu" class="admin-panel">
+        <div class="admin-header">
+            <h2>Menu</h2>
+            <div class="admin-controls">
+                <button id="close-main-menu" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="admin-content">
+            <div class="menu-options">
+                <button class="menu-option" id="menu-rules">
+                    <i class="fas fa-book"></i> Game Rules
+                </button>
+                <button class="menu-option" id="menu-prizes">
+                    <i class="fas fa-trophy"></i> Prizes
+                </button>
+                <button class="menu-option" id="menu-credits">
+                    <i class="fas fa-star"></i> Credits
+                </button>
+                <button class="menu-option" id="menu-leaderboard">
+                    <i class="fas fa-list-ol"></i> Leaderboard
+                </button>
+                <button class="menu-option" id="menu-targets">
+                    <i class="fas fa-bullseye"></i> My Targets
+                </button>
+                <button class="menu-option" id="menu-admin" style="display: none;">
+                    <i class="fas fa-shield-alt"></i> Admin Panel
+                </button>
+                <button class="menu-option menu-option-logout" id="menu-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>
     <!-- Login Screen -->
-    <div id="login-screen" class="login-container">
-        <div class="login-logo">
-            <img src="logo.png" alt="Matric Assassin Logo" class="login-logo-img">
-        </div>
-        <h1 class="login-title">Matric Assassin</h1>
-        <div class="form-group">
-            <input type="text" id="player-code" class="form-control" placeholder="Enter your code">
-        </div>
-        <button id="login-btn" class="btn btn-block">Enter Game</button>
-        <div style="margin-top: 15px;">
-            <button id="admin-login-btn" class="btn btn-admin">Admin Login</button>
+    <div id="login-screen" style="display: flex; justify-content: center; align-items: flex-start; padding-top: 5%; min-height: 100vh; background-color: #f5f6fa;">
+        <div class="login-container">
+            <div class="login-logo">
+                <img src="logo.png" alt="Matric Assassin Logo" class="login-logo-img">
+            </div>
+            <h1 class="login-title">Matric Assassin</h1>
+            <div class="form-group">
+                <input type="text" id="player-code" class="form-control" placeholder="Enter your code">
+            </div>
+            <button id="login-btn" class="btn btn-block">Enter Game</button>
+            <div style="margin-top: 15px;">
+                <button id="admin-login-btn" class="btn btn-admin">Admin Login</button>
+            </div>
         </div>
     </div>
 
@@ -88,13 +126,13 @@
             <div class="container">
                 <div class="header-content">
                     <div class="logo">
-                        <button id="mobile-menu-toggle" class="mobile-menu-toggle">
-                            <i class="fas fa-bars"></i>
-                        </button>
                         <img src="logo.png" alt="Matric Assassin Logo" class="logo-img">
-                        <span>Matric Assassin</span>
+                        <h1>Matric Assassin</h1>
                     </div>
                     <div class="header-actions">
+                        <button id="menu-toggle" class="btn btn-menu">
+                            <i class="fas fa-bars"></i> Menu
+                        </button>
                         <button id="admin-panel-toggle" class="btn btn-admin">
                             <i class="fas fa-shield-alt"></i> Admin
                         </button>

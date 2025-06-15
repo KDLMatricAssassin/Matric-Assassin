@@ -1589,22 +1589,135 @@ function handleOutsideClick(e) {
     }
 }
 
+// Toggle main menu panel
+function toggleMainMenu(show = null) {
+    const menu = document.getElementById('main-menu');
+    const isVisible = menu.classList.contains('active');
+    
+    if (show === null) {
+        show = !isVisible;
+    }
+    
+    if (show) {
+        menu.style.display = 'block';
+        setTimeout(() => {
+            menu.classList.add('active');
+        }, 10);
+        // Close admin panel if open
+        const adminPanel = document.getElementById('admin-panel');
+        if (adminPanel && adminPanel.classList.contains('active')) {
+            adminPanel.classList.remove('active');
+        }
+    } else {
+        menu.classList.remove('active');
+        // Wait for the transition to complete before hiding
+        menu.addEventListener('transitionend', function handler() {
+            menu.removeEventListener('transitionend', handler);
+            if (!menu.classList.contains('active')) {
+                menu.style.display = 'none';
+            }
+        }, { once: true });
+    }
+}
+
+// Update menu based on user role
+function updateMenuForUser(user) {
+    const adminMenuItem = document.getElementById('menu-admin');
+    if (adminMenuItem) {
+        adminMenuItem.style.display = user && user.isAdmin ? 'flex' : 'none';
+    }
+}
+
 // Initialize the app
 function init() {
+    // First, ensure the login screen is visible and app is hidden
+    if (loginScreen) {
+        loginScreen.style.display = 'flex';
+    }
+    if (app) {
+        app.style.display = 'none';
+    }
+    
+    // Menu toggle event listeners
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuClose = document.getElementById('close-main-menu');
+    
+    if (menuToggle) {
+        menuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleMainMenu();
+        });
+    }
+    
+    if (menuClose) {
+        menuClose.addEventListener('click', (e) => {
+            e.preventDefault();
+            toggleMainMenu(false);
+        });
+    }
+    
+    // Menu item click handlers
+    document.addEventListener('click', (e) => {
+        const menuItem = e.target.closest('.menu-option');
+        if (!menuItem) return;
+        
+        e.preventDefault();
+        const id = menuItem.id;
+        
+        // Close menu first
+        toggleMainMenu(false);
+        
+        // Handle menu item clicks
+        switch(id) {
+            case 'menu-rules':
+                document.getElementById('rules-modal').style.display = 'block';
+                break;
+            case 'menu-prizes':
+                document.getElementById('prizes-modal').style.display = 'block';
+                break;
+            case 'menu-credits':
+                document.getElementById('credits-modal').style.display = 'block';
+                break;
+            case 'menu-leaderboard':
+                showLeaderboard();
+                break;
+            case 'menu-targets':
+                showTargets();
+                break;
+            case 'menu-admin':
+                toggleAdminPanel();
+                break;
+            case 'menu-logout':
+                handleLogout();
+                break;
+        }
+    });
+    
+    // Update menu for current user if logged in
+    const savedUser = localStorage.getItem('currentUser');
+    if (savedUser) {
+        try {
+            const user = JSON.parse(savedUser);
+            updateMenuForUser(user);
+        } catch (e) {
+            console.error('Error parsing saved user:', e);
+        }
+    }
+
     // Event Listeners
-    loginBtn.addEventListener('click', handleLogin);
-    adminLoginBtn.addEventListener('click', showAdminLogin);
-    logoutBtn.addEventListener('click', handleLogout);
-    adminPanelToggle.addEventListener('click', toggleAdminPanel);
-    closeAdminPanel.addEventListener('click', toggleAdminPanel);
+    if (loginBtn) loginBtn.addEventListener('click', handleLogin);
+    if (adminLoginBtn) adminLoginBtn.addEventListener('click', showAdminLogin);
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+    if (adminPanelToggle) adminPanelToggle.addEventListener('click', toggleAdminPanel);
+    if (closeAdminPanel) closeAdminPanel.addEventListener('click', toggleAdminPanel);
     document.addEventListener('click', handleOutsideClick);
     
-    // Mobile menu toggle removed - using responsive sidebar instead
-    
     // Tab switching
-    tabBtns.forEach(btn => {
-        btn.addEventListener('click', switchTab);
-    });
+    if (tabBtns && tabBtns.length) {
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', switchTab);
+        });
+    }
     
     // Initialize profile picture upload
     const profilePicUpload = document.getElementById('profile-picture-upload');
@@ -1634,12 +1747,12 @@ function init() {
     if (backToAppFromTargets) {
         backToAppFromTargets.addEventListener('click', hideTargets);
     }
-
-    // Check if user is already logged in
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
+    
+    // Auto-login with saved session if available
+    const savedUserSession = localStorage.getItem('currentUser');
+    if (savedUserSession) {
         try {
-            const user = JSON.parse(savedUser);
+            const user = JSON.parse(savedUserSession);
             // If it's not the admin, find the full user object from gameData
             if (user.isAdmin) {
                 loginUser(user);
@@ -1649,12 +1762,16 @@ function init() {
                     loginUser(fullUser);
                 } else {
                     localStorage.removeItem('currentUser');
+                    updateMenuForUser(null);
                 }
             }
         } catch (e) {
             console.error('Error parsing saved user:', e);
             localStorage.removeItem('currentUser');
+            updateMenuForUser(null);
         }
+    } else {
+        updateMenuForUser(null);
     }
 
     // Render initial data
@@ -3258,43 +3375,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeImageModal = document.getElementById('close-image-modal');
     const enlargedImg = document.getElementById('enlarged-img');
     
-    // Function to open modal
-    function openModal(modal) {
-        if (!modal) return;
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-        document.documentElement.style.overflow = 'hidden';
-    }
-    
-    // Function to close modal
-    function closeModal(modal) {
-        if (!modal) return;
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-        document.documentElement.style.overflow = 'auto';
-    }
-    
     // Function to open image modal
     function openImageModal(imgSrc) {
         enlargedImg.src = imgSrc;
-        openModal(imageModal);
+        imageModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
     }
     
     // Function to close image modal
     function closeImageModalFunc() {
-        closeModal(imageModal);
+        imageModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
     }
 
     if (rulesBtn && rulesModal) {
         rulesBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            openModal(rulesModal);
+            rulesModal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
         });
     }
     
     if (closeRulesBtn) {
         closeRulesBtn.addEventListener('click', () => {
-            closeModal(rulesModal);
+            rulesModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
         });
     }
     
@@ -3302,13 +3407,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prizesBtn && prizesModal) {
         prizesBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            openModal(prizesModal);
+            prizesModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         });
     }
     
     if (closePrizesBtn) {
         closePrizesBtn.addEventListener('click', () => {
-            closeModal(prizesModal);
+            prizesModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         });
     }
     
@@ -3316,39 +3423,34 @@ document.addEventListener('DOMContentLoaded', () => {
     if (creditsBtn && creditsModal) {
         creditsBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            openModal(creditsModal);
+            creditsModal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
         });
     }
     
     if (closeCreditsBtn) {
         closeCreditsBtn.addEventListener('click', () => {
-            closeModal(creditsModal);
+            creditsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         });
     }
     
     // Close modals when clicking outside of them
     window.addEventListener('click', (e) => {
         if (e.target === rulesModal) {
-            closeModal(rulesModal);
+            rulesModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
         if (e.target === prizesModal) {
-            closeModal(prizesModal);
+            prizesModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
         if (e.target === creditsModal) {
-            closeModal(creditsModal);
+            creditsModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
         }
         if (e.target === imageModal) {
             closeImageModalFunc();
-        }
-    });
-    
-    // Close modals with Escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') {
-            const activeModal = document.querySelector('.modal.active');
-            if (activeModal) {
-                closeModal(activeModal);
-            }
         }
     });
         

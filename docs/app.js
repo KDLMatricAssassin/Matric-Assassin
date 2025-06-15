@@ -1956,6 +1956,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const rulesModal = document.getElementById('rules-modal');
     const closeRulesBtn = document.getElementById('close-rules-modal');
     
+    // Set up prison modal
+    const prisonBtn = document.getElementById('prison-btn');
+    const prisonModal = document.getElementById('prison-modal');
+    const closePrisonBtn = document.getElementById('close-prison-modal');
+    
+    // Set up graveyard modal
+    const graveyardBtn = document.getElementById('graveyard-btn');
+    const graveyardModal = document.getElementById('graveyard-modal');
+    const closeGraveyardBtn = document.getElementById('close-graveyard-modal');
+    
     // Set up image modal
     const imageModal = document.getElementById('image-modal');
     const closeImageModal = document.getElementById('close-image-modal');
@@ -1974,32 +1984,130 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'auto';
     }
 
+    // Function to open modal
+    function openModal(modal) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+    }
+
+    // Function to close modal
+    function closeModal(modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Re-enable scrolling
+    }
+
+    // Rules modal
     if (rulesBtn && rulesModal) {
         rulesBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            rulesModal.style.display = 'block';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            openModal(rulesModal);
         });
     }
     
     if (closeRulesBtn) {
         closeRulesBtn.addEventListener('click', () => {
-            rulesModal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
+            closeModal(rulesModal);
+        });
+    }
+
+    // Prison modal
+    if (prisonBtn && prisonModal) {
+        prisonBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(prisonModal);
+            updatePrisonPlayers();
+        });
+    }
+    
+    if (closePrisonBtn) {
+        closePrisonBtn.addEventListener('click', () => {
+            closeModal(prisonModal);
+        });
+    }
+
+    // Graveyard modal
+    if (graveyardBtn && graveyardModal) {
+        graveyardBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal(graveyardModal);
+            updateGraveyardPlayers();
+        });
+    }
+    
+    if (closeGraveyardBtn) {
+        closeGraveyardBtn.addEventListener('click', () => {
+            closeModal(graveyardModal);
         });
     }
     
     // Close modals when clicking outside of them
     window.addEventListener('click', (e) => {
-        if (e.target === rulesModal) {
-            rulesModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-        if (e.target === imageModal) {
-            closeImageModalFunc();
-        }
+        if (e.target === rulesModal) closeModal(rulesModal);
+        if (e.target === prisonModal) closeModal(prisonModal);
+        if (e.target === graveyardModal) closeModal(graveyardModal);
+        if (e.target === imageModal) closeImageModalFunc();
     });
+
+    // Function to update prison players list
+    function updatePrisonPlayers() {
+        const prisonList = document.getElementById('prison-players-list');
+        if (!prisonList) return;
+        
+        // Filter players who are in prison
+        const prisonPlayers = gameData.players.filter(player => player.status === 'suspended');
+        
+        if (prisonPlayers.length === 0) {
+            prisonList.innerHTML = '<p>No players are currently in prison.</p>';
+            return;
+        }
+        
+        let html = '<ul class="player-list">';
+        prisonPlayers.forEach(player => {
+            html += `
+                <li class="player-item">
+                    <div class="player-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="player-info">
+                        <span class="player-name">${player.name}</span>
+                        <span class="player-status">Suspended until: ${player.suspendedUntil || 'Indefinite'}</span>
+                    </div>
+                </li>`;
+        });
+        html += '</ul>';
+        prisonList.innerHTML = html;
+    }
     
+    // Function to update graveyard players list
+    function updateGraveyardPlayers() {
+        const graveyardList = document.getElementById('graveyard-players-list');
+        if (!graveyardList) return;
+        
+        // Filter players who are eliminated
+        const eliminatedPlayers = gameData.players.filter(player => player.status === 'eliminated');
+        
+        if (eliminatedPlayers.length === 0) {
+            graveyardList.innerHTML = '<p>No players have been eliminated yet.</p>';
+            return;
+        }
+        
+        let html = '<ul class="player-list">';
+        eliminatedPlayers.forEach(player => {
+            html += `
+                <li class="player-item">
+                    <div class="player-avatar">
+                        <i class="fas fa-skull"></i>
+                    </div>
+                    <div class="player-info">
+                        <span class="player-name">${player.name}</span>
+                        <span class="player-status">Eliminated by: ${player.eliminatedBy || 'Unknown'}</span>
+                    </div>
+                </li>`;
+        });
+        html += '</ul>';
+        graveyardList.innerHTML = html;
+    }
+
     // Close image modal when clicking the close button
     if (closeImageModal) {
         closeImageModal.addEventListener('click', closeImageModalFunc);

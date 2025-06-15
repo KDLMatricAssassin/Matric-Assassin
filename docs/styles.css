@@ -170,7 +170,9 @@ header {
 .sidebar {
     position: sticky;
     top: 80px;
-    height: fit-content;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    padding-right: 10px;
 }
 
 .profile-section {
@@ -459,8 +461,14 @@ header {
 .nav-menu {
     background: white;
     border-radius: var(--border-radius);
-    padding: 15px;
+    padding: 10px;
     box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 100%;
+    overflow-y: visible;
+    margin-bottom: 20px;
 }
 
 .nav-link {
@@ -470,8 +478,26 @@ header {
     color: var(--dark);
     text-decoration: none;
     border-radius: var(--border-radius);
-    margin-bottom: 5px;
-    transition: all 0.3s ease;
+    margin: 0;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.nav-link i {
+    width: 24px;
+    text-align: center;
+    margin-right: 12px;
+    font-size: 16px;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: var(--light-gray);
+    color: var(--primary);
+    transform: translateX(3px);
 }
 
 .nav-link i {
@@ -576,9 +602,13 @@ header {
 
 /* Right Sidebar */
 .right-sidebar {
+    grid-area: sidebar;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 5px;
 }
 
 .stats-grid {
@@ -2297,6 +2327,105 @@ header {
 #close-image-modal:hover {
     color: #ff6b6b;
     transform: scale(1.1);
+}
+
+/* Prison and Graveyard Modals */
+.prison-content,
+.graveyard-content {
+    padding: 20px;
+}
+
+.prison-content h4,
+.graveyard-content h4 {
+    color: var(--primary);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.player-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.player-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: white;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.player-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.player-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    color: var(--gray);
+    font-size: 1.2rem;
+}
+
+.player-info {
+    flex: 1;
+}
+
+.player-name {
+    display: block;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 3px;
+}
+
+.player-status {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--gray);
+}
+
+/* Graveyard specific styles */
+.graveyard-content .player-avatar {
+    background: #2c3e50;
+    color: #ecf0f1;
+}
+
+/* Prison specific styles */
+.prison-content .player-avatar {
+    background: #f39c12;
+    color: white;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .player-item {
+        padding: 10px 12px;
+    }
+    
+    .player-avatar {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .player-name {
+        font-size: 0.95rem;
+    }
+    
+    .player-status {
+        font-size: 0.8rem;
+    }
 }
 
 /* Enlargeable image cursor */
